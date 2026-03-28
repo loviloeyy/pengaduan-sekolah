@@ -50,25 +50,10 @@
         box-shadow: 0 6px 25px rgba(93, 64, 55, 0.12);
     }
 
-    .stat-card-1 {
-        background: var(--stat-gradient-1);
-        color: white;
-    }
-
-    .stat-card-2 {
-        background: var(--stat-gradient-2);
-        color: white;
-    }
-
-    .stat-card-3 {
-        background: var(--stat-gradient-3);
-        color: white;
-    }
-
-    .stat-card-4 {
-        background: var(--stat-gradient-4);
-        color: var(--dark);
-    }
+    .stat-card-1 { background: var(--stat-gradient-1); color: white; }
+    .stat-card-2 { background: var(--stat-gradient-2); color: white; }
+    .stat-card-3 { background: var(--stat-gradient-3); color: white; }
+    .stat-card-4 { background: var(--stat-gradient-4); color: var(--dark); }
 
     .stat-icon {
         font-size: 2.2rem;
@@ -101,32 +86,41 @@
         border: 1px solid rgba(93, 64, 55, 0.05);
     }
 
+    /* ========================================
+       STATUS BADGE - WARNA BARU (CERAH)
+       ======================================== */
     .status-badge {
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: 500;
-        font-size: 0.8rem;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.75rem;
         display: inline-block;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid transparent;
         font-family: 'Poppins', sans-serif;
+        text-transform: capitalize;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
 
+    /* Status Menunggu: Kuning Emas */
     .status-menunggu {
-        background-color: #f5f1eb;
-        color: #5d4037;
-        border-color: #8d6e63;
+        background-color: #FFF3CD;
+        color: #856404;
+        border-color: #FFE69C;
     }
 
+    /* Status Proses: Biru Langit */
     .status-proses {
-        background-color: #f5f1eb;
-        color: #795548;
-        border-color: #8d6e63;
+        background-color: #B3E5FC;
+        color: #0277BD;
+        border-color: #81D4FA;
     }
 
+    /* Status Selesai: Hijau Mint */
     .status-selesai {
-        background-color: #f5f1eb;
-        color: #5d4037;
-        border-color: #8d6e63;
+        background-color: #C8E6C9;
+        color: #2E7D32;
+        border-color: #A5D6A7;
     }
 
     .user-info {
@@ -192,9 +186,6 @@
         font-weight: 700;
         color: var(--primary);
         margin-bottom: 20px;
-        /* Menghapus garis bawah */
-        /* padding-bottom: 10px; */
-        /* border-bottom: 2px solid var(--accent); */
         font-family: 'Poppins', sans-serif;
         letter-spacing: 0.5px;
     }
@@ -235,42 +226,21 @@
     }
 
     @media (max-width: 768px) {
-        .stat-card {
-            margin-bottom: 16px;
-        }
-
-        .table th, .table td {
-            padding: 10px 8px;
-            font-size: 0.8rem;
-        }
-
-        .stat-number {
-            font-size: 1.5rem;
-        }
-
-        .user-info {
-            margin-bottom: 10px;
-        }
+        .stat-card { margin-bottom: 16px; }
+        .table th, .table td { padding: 10px 8px; font-size: 0.8rem; }
+        .stat-number { font-size: 1.5rem; }
+        .user-info { margin-bottom: 10px; }
     }
 
     @media (max-width: 576px) {
-        .stat-card {
-            margin-bottom: 12px;
-        }
-
-        .stat-number {
-            font-size: 1.3rem;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-        }
+        .stat-card { margin-bottom: 12px; }
+        .stat-number { font-size: 1.3rem; }
+        .section-title { font-size: 1.2rem; }
     }
 </style>
 
 <div class="row">
-    <div class="col-12 mb-4">
-    </div>
+    <div class="col-12 mb-4"></div>
 
     <div class="col-md-3 col-sm-6 mb-4">
         <div class="modern-card stat-card-1 text-center p-3">
@@ -306,8 +276,7 @@
 </div>
 
 <div class="row">
-    <div class="col-12 mb-4">
-    </div>
+    <div class="col-12 mb-4"></div>
 
     <div class="col-md-12">
         <div class="modern-card info-section">

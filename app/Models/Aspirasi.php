@@ -27,6 +27,11 @@ class Aspirasi extends Model
         return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
 
+    public function histories()
+    {
+        return $this->hasMany(AspirasiHistory::class, 'id_aspirasi', 'id_aspirasi')->orderBy('created_at', 'desc');
+    }
+
     // Helper untuk mendapatkan URL foto
     public function getFotoUrlAttribute()
     {

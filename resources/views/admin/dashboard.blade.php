@@ -4,32 +4,54 @@
 
 @section('content')
 <style>
-    /* Palet warna Earth Tone */
+    /* Font Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    /* Palet warna Coklat Eksklusif */
     :root {
         --primary: #5D4037;
         --secondary: #795548;
         --accent: #8D6E63;
         --light: #F5F1EB;
         --dark: #3E2723;
-        --card-gradient: linear-gradient(135deg, #ffffff, #f8f4f0);
-        --header-gradient: linear-gradient(135deg, #5D4037, #795548);
+        --muted: #BCAAA4;
+
+        --card-gradient: linear-gradient(135deg, #ffffff, #f9f5f0);
+        --stat-gradient-1: linear-gradient(135deg, #5D4037, #3E2723);
+        --stat-gradient-2: linear-gradient(135deg, #8D6E63, #795548);
+        --stat-gradient-3: linear-gradient(135deg, #5D4037, #5D4037);
+        --stat-gradient-4: linear-gradient(135deg, #BCAAA4, #A1887F);
+
+        --card-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
+        --btn-shadow: 0 4px 12px rgba(93, 64, 55, 0.2);
     }
 
-    body { background-color: #faf9f7; }
+    body {
+        background-color: var(--light);
+        font-family: 'Poppins', sans-serif;
+        color: var(--dark);
+        font-weight: 400;
+    }
 
     .earth-card {
         background: var(--card-gradient);
         border: none;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
+        box-shadow: var(--card-shadow);
         overflow: hidden;
         border: 1px solid rgba(93, 64, 55, 0.05);
         margin-bottom: 24px;
         height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .earth-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(93, 64, 55, 0.12);
     }
 
     .earth-card-header {
-        background: var(--header-gradient);
+        background: var(--stat-gradient-1);
         color: white;
         border-radius: 16px 16px 0 0 !important;
         padding: 20px 24px;
@@ -38,50 +60,58 @@
         align-items: center;
         gap: 12px;
         font-size: 1.1rem;
+        font-family: 'Poppins', sans-serif;
     }
 
     .card-body-custom {
         padding: 24px;
     }
 
-    /* Statistik Cards */
-    .stat-card {
+    .modern-card {
         background: var(--card-gradient);
         border: none;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
+        box-shadow: var(--card-shadow);
         transition: all 0.3s ease;
+        overflow: hidden;
         border: 1px solid rgba(93, 64, 55, 0.05);
         height: 100%;
-        padding: 20px;
     }
 
-    .stat-card:hover {
+    .modern-card:hover {
         transform: translateY(-3px);
-        box-shadow: 0 6px 25px rgba(93, 64, 55, 0.15);
+        box-shadow: 0 6px 25px rgba(93, 64, 55, 0.12);
+    }
+
+    .stat-card-1 { background: var(--stat-gradient-1); color: white; }
+    .stat-card-2 { background: var(--stat-gradient-2); color: white; }
+    .stat-card-3 { background: var(--stat-gradient-3); color: white; }
+    .stat-card-4 { background: var(--stat-gradient-4); color: var(--dark); }
+
+    .stat-icon {
+        font-size: 2.2rem;
+        opacity: 0.9;
+        margin-bottom: 12px;
+        display: block;
     }
 
     .stat-number {
         font-size: 2rem;
         font-weight: 700;
-        margin: 10px 0;
-        color: var(--primary);
+        line-height: 1.2;
+        font-family: 'Poppins', sans-serif;
+        margin-top: 5px;
     }
 
     .stat-label {
-        font-size: 0.9rem;
-        color: var(--dark);
-        opacity: 0.8;
-        font-weight: 600;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        text-transform: capitalize;
     }
 
-    .stat-icon {
-        font-size: 2.2rem;
-        opacity: 0.8;
-        color: var(--primary);
-    }
-
-    /* Table Styling */
     .table-responsive {
         border-radius: 12px;
         overflow-x: auto;
@@ -107,6 +137,7 @@
         letter-spacing: 1px;
         white-space: nowrap;
         border: none;
+        font-family: 'Poppins', sans-serif;
     }
 
     .table td {
@@ -116,6 +147,7 @@
         vertical-align: middle;
         white-space: nowrap;
         color: var(--dark);
+        font-family: 'Poppins', sans-serif;
     }
 
     .table td.col-keterangan {
@@ -150,7 +182,6 @@
         background-color: #fafafa;
     }
 
-    /* Badges */
     .badge-pill {
         padding: 6px 12px;
         border-radius: 50px;
@@ -158,24 +189,30 @@
         font-size: 0.8rem;
         display: inline-block;
         white-space: nowrap;
+        font-family: 'Poppins', sans-serif;
     }
     .badge-kategori {
         background-color: #f5f1eb;
         color: #5d4037;
         border: 1px solid #8d6e63;
     }
+
+    /* Status Badge - Warna Cerah */
     .status-badge {
-        padding: 5px 15px;
-        border-radius: 20px;
+        padding: 6px 16px;
+        border-radius: 50px;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         display: inline-block;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid transparent;
         white-space: nowrap;
+        font-family: 'Poppins', sans-serif;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    .status-menunggu { background-color: #fff9db; color: #856404; }
-    .status-proses { background-color: #d1ecf1; color: #0c5460; }
-    .status-selesai { background-color: #d4edda; color: #155724; }
+
+    .status-menunggu { background-color: #FFF3CD; color: #856404; border-color: #FFE69C; }
+    .status-proses { background-color: #B3E5FC; color: #0277BD; border-color: #81D4FA; }
+    .status-selesai { background-color: #C8E6C9; color: #2E7D32; border-color: #A5D6A7; }
 
     .foto-pengaduan {
         width: 60px;
@@ -199,21 +236,14 @@
         margin: 0 auto;
     }
 
-    /* Panduan Section */
-    .panduan-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+    .panduan-list { list-style: none; padding: 0; margin: 0; }
     .panduan-item {
         display: flex;
         align-items: flex-start;
         padding: 15px 0;
         border-bottom: 1px solid rgba(93, 64, 55, 0.1);
     }
-    .panduan-item:last-child {
-        border-bottom: none;
-    }
+    .panduan-item:last-child { border-bottom: none; }
     .panduan-icon {
         width: 40px;
         height: 40px;
@@ -232,6 +262,7 @@
         font-weight: 700;
         margin-bottom: 5px;
         font-size: 1rem;
+        font-family: 'Poppins', sans-serif;
     }
     .panduan-content p {
         color: var(--dark);
@@ -239,9 +270,9 @@
         margin: 0;
         line-height: 1.5;
         opacity: 0.9;
+        font-family: 'Poppins', sans-serif;
     }
 
-    /* Modal Styles */
     .modal-custom-simple {
         display: none;
         position: fixed;
@@ -266,7 +297,7 @@
         overflow: hidden;
     }
     .modal-header-custom {
-        background: var(--header-gradient);
+        background: var(--stat-gradient-1);
         color: white;
         padding: 20px 25px;
         display: flex;
@@ -278,6 +309,7 @@
         font-weight: 700;
         font-size: 1.3rem;
         margin: 0;
+        font-family: 'Poppins', sans-serif;
     }
     .close-btn {
         background: rgba(255,255,255,0.2);
@@ -305,6 +337,7 @@
         line-height: 1.6;
         max-height: 60vh;
         overflow-y: auto;
+        font-family: 'Poppins', sans-serif;
     }
 
     @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
@@ -319,50 +352,34 @@
 
 <div class="container-fluid py-4">
 
-    <!-- Statistik Cards (Langsung di atas tanpa judul) -->
+    <!-- Statistik Cards -->
     <div class="row g-4 mb-4">
         <div class="col-md-3 col-sm-6">
-            <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="stat-label">Total Pengaduan</div>
-                        <div class="stat-number">{{ $total }}</div>
-                    </div>
-                    <i class="fas fa-clipboard-list stat-icon"></i>
-                </div>
+            <div class="modern-card stat-card-1 text-center p-3">
+                <i class="fas fa-clipboard-list stat-icon"></i>
+                <div class="stat-label">Total Pengaduan</div>
+                <div class="stat-number">{{ $total }}</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="stat-label">Menunggu</div>
-                        <div class="stat-number" style="color: #F57F17;">{{ $menunggu }}</div>
-                    </div>
-                    <i class="fas fa-clock stat-icon"></i>
-                </div>
+            <div class="modern-card stat-card-2 text-center p-3">
+                <i class="fas fa-clock stat-icon"></i>
+                <div class="stat-label">Menunggu</div>
+                <div class="stat-number">{{ $menunggu }}</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="stat-label">Diproses</div>
-                        <div class="stat-number" style="color: #0277BD;">{{ $proses }}</div>
-                    </div>
-                    <i class="fas fa-cog stat-icon"></i>
-                </div>
+            <div class="modern-card stat-card-3 text-center p-3">
+                <i class="fas fa-cog stat-icon"></i>
+                <div class="stat-label">Diproses</div>
+                <div class="stat-number">{{ $proses }}</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="stat-label">Selesai</div>
-                        <div class="stat-number" style="color: #2E7D32;">{{ $selesai }}</div>
-                    </div>
-                    <i class="fas fa-check-circle stat-icon"></i>
-                </div>
+            <div class="modern-card stat-card-4 text-center p-3">
+                <i class="fas fa-check-circle stat-icon"></i>
+                <div class="stat-label">Selesai</div>
+                <div class="stat-number">{{ $selesai }}</div>
             </div>
         </div>
     </div>
@@ -402,7 +419,14 @@
                                         </td>
                                         <td><strong>{{ $aspirasi->nis }}</strong></td>
                                         <td>{{ $aspirasi->siswa->name ?? '-' }}</td>
-                                        <td><span style="font-size:0.8rem; background:#eee; padding:4px 8px; border-radius:4px;">{{ $aspirasi->siswa->kelas ?? '-' }}</span></td>
+
+                                        <!-- KOLOM KELAS: Teks Biasa (Tanpa Button/Badge) -->
+                                        <td>
+                                            <span style="font-size: 0.9rem; font-weight: 500; color: var(--dark);">
+                                                {{ $aspirasi->siswa->kelas ?? '-' }}
+                                            </span>
+                                        </td>
+
                                         <td><span class="badge-pill badge-kategori">{{ $aspirasi->kategori->ket_kategori }}</span></td>
                                         <td class="col-keterangan" onclick="showModal('Detail Keterangan', '{{ str_replace("'", "\\'", $aspirasi->ket) }}')">
                                             {{ Str::limit($aspirasi->ket, 25) }}
@@ -425,13 +449,13 @@
                             </table>
                         </div>
                         <div class="text-center mt-3">
-                            <a href="{{ route('admin.aspirasi.index') }}" class="btn btn-sm" style="background: var(--primary); color: white; border-radius: 8px; padding: 8px 20px; font-weight: 600;">
+                            <a href="{{ route('admin.aspirasi.index') }}" class="btn btn-sm" style="background: var(--primary); color: white; border-radius: 8px; padding: 8px 20px; font-weight: 600; font-family: 'Poppins', sans-serif;">
                                 Lihat Semua Pengaduan <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
                     @else
                         <div class="text-center py-5">
-                            <i class="fas fa-inbox fa-3x text-muted mb-3" style="opacity: 0.5;"></i>
+                            <i class="fas fa-inbox fa-3x text-muted mb-3" style="opacity: 0.5; color: var(--muted);"></i>
                             <p class="text-muted mb-0">Belum ada pengaduan masuk.</p>
                         </div>
                     @endif
@@ -478,8 +502,8 @@
                     </ul>
 
                     <div class="mt-4 p-3" style="background: var(--light); border-radius: 12px; border: 1px dashed var(--accent);">
-                        <h6 style="color: var(--primary); font-weight: 700; margin-bottom: 8px;"><i class="fas fa-lightbulb me-2"></i>Tips Cepat</h6>
-                        <p style="font-size: 0.85rem; color: var(--dark); margin: 0;">
+                        <h6 style="color: var(--primary); font-weight: 700; margin-bottom: 8px; font-family: 'Poppins', sans-serif;"><i class="fas fa-lightbulb me-2"></i>Tips Cepat</h6>
+                        <p style="font-size: 0.85rem; color: var(--dark); margin: 0; font-family: 'Poppins', sans-serif;">
                             Prioritaskan pengaduan dengan status <strong>"Menunggu"</strong> untuk segera ditindaklanjuti agar tidak menumpuk.
                         </p>
                     </div>
@@ -489,7 +513,7 @@
     </div>
 </div>
 
-<!-- MODAL DETAIL (Tanpa Blur) -->
+<!-- MODAL DETAIL -->
 <div id="detailModalSimple" class="modal-custom-simple" onclick="closeModal(event)">
     <div class="modal-content-custom">
         <div class="modal-header-custom">
@@ -503,7 +527,6 @@
 </div>
 
 <script>
-    // Fungsi untuk Modal Detail (Tanpa Blur)
     function showModal(title, content) {
         document.getElementById('modalTitleSimple').innerText = title;
         document.getElementById('modalBodySimple').innerText = content;
@@ -518,7 +541,6 @@
         document.getElementById('detailModalSimple').style.display = 'none';
     }
 
-    // Close with ESC key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeModalDirect();

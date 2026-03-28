@@ -77,6 +77,17 @@ class SiswaAspirasiController extends Controller
         return view('siswa.aspirasi.ringkasan', compact('aspirasis'));
     }
 
+    public function show($id)
+    {
+        $siswa = Auth::guard('siswa')->user();
+        $aspirasi = Aspirasi::where('id_aspirasi', $id)
+                            ->where('nis', $siswa->nis)
+                            ->with(['kategori', 'histories'])
+                            ->firstOrFail();
+
+        return view('siswa.aspirasi.show', compact('aspirasi'));
+    }
+
     // Method baru untuk menghapus pengaduan
     public function destroy($id)
     {

@@ -259,6 +259,30 @@
         box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
     }
 
+    .btn-history-modern {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid transparent;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0;
+        margin: 0 2px;
+        font-size: 0.8rem;
+    }
+
+    .btn-history-modern:hover {
+        background-color: #2e7d32;
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+    }
+
     .btn-delete-modern {
         width: 32px;
         height: 32px;
@@ -281,6 +305,76 @@
         color: white;
         transform: scale(1.1);
         box-shadow: 0 4px 10px rgba(198, 40, 40, 0.3);
+    }
+
+    /* Timeline Styles */
+    .history-timeline {
+        position: relative;
+        padding: 10px 0;
+    }
+
+    .history-timeline::before {
+        content: '';
+        position: absolute;
+        left: 18px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--primary), var(--accent));
+        border-radius: 3px;
+    }
+
+    .history-item {
+        position: relative;
+        padding: 12px 15px 12px 50px;
+        margin-bottom: 8px;
+        background: var(--light);
+        border-radius: 10px;
+        border: 1px solid rgba(93, 64, 55, 0.08);
+        transition: all 0.2s ease;
+    }
+
+    .history-item:hover {
+        transform: translateX(4px);
+        box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1);
+    }
+
+    .history-item::before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        top: 18px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--primary);
+        border: 3px solid white;
+        box-shadow: 0 0 0 2px var(--primary);
+        z-index: 1;
+    }
+
+    .history-status {
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .history-feedback {
+        font-size: 0.85rem;
+        color: #555;
+        margin-bottom: 4px;
+    }
+
+    .history-meta {
+        font-size: 0.75rem;
+        color: var(--accent);
+    }
+
+    .no-history {
+        text-align: center;
+        padding: 20px;
+        color: var(--accent);
+        font-style: italic;
     }
 
     /* Foto */
@@ -539,16 +633,15 @@
                                 <thead>
                                     <tr>
                                         <th width="6%" class="text-center">Foto</th>
-                                        <th width="7%">NIS</th>
-                                        <th width="12%">Nama Siswa</th>
-                                        <th width="7%">Kelas</th>
-                                        <th width="12%">Kategori</th>
-                                        <th width="12%">Lokasi</th>
-                                        <th width="16%">Keterangan</th>
+                                        <th width="8%">NIS</th>
+                                        <th width="13%">Nama Siswa</th>
+                                        <th width="8%">Kelas</th>
+                                        <th width="13%">Kategori</th>
+                                        <th width="13%">Lokasi</th>
+                                        <th width="17%">Keterangan</th>
                                         <th width="8%">Status</th>
-                                        <th width="10%">Feedback</th>
                                         <th width="8%">Tanggal</th>
-                                        <th width="4%" class="text-center">Aksi</th>
+                                        <th width="6%" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -594,8 +687,6 @@
                                             </span>
                                         </td>
 
-                                        <td>{{ $aspirasi->feedback ?? '-' }}</td>
-
                                         <!-- Tanggal -->
                                         <td class="col-tanggal">
                                             {{ $aspirasi->created_at->format('d M') }}<br>
@@ -607,6 +698,11 @@
                                             <button class="btn-action-modern" title="Edit Status"
                                                     onclick="openEditModal({{ $aspirasi->id_aspirasi }}, '{{ $aspirasi->status }}', '{{ addslashes($aspirasi->feedback ?? '') }}')">
                                                 <i class="fas fa-pen"></i>
+                                            </button>
+
+                                            <button class="btn-history-modern" title="Riwayat Status"
+                                                    onclick="openHistoryModal({{ $aspirasi->id_aspirasi }})">
+                                                <i class="fas fa-clock-rotate-left"></i>
                                             </button>
 
                                             <form action="{{ route('admin.aspirasi.destroy', $aspirasi->id_aspirasi) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
@@ -686,7 +782,52 @@
     </div>
 </div>
 
+<!-- 3. MODAL RIWAYAT STATUS (Dengan Blur) -->
+<div id="historyModalBackdrop" class="modal-custom-blur" onclick="closeHistoryModal(event)">
+    <div class="modal-content-custom">
+        <div class="modal-header-custom">
+            <h5 class="modal-title-custom"><i class="fas fa-file-alt me-2"></i>Detail Pengaduan</h5>
+            <button class="close-btn" onclick="closeHistoryModalDirect()">&times;</button>
+        </div>
+        <div class="modal-body-custom" id="historyModalBody">
+            <!-- Diisi oleh JS -->
+        </div>
+    </div>
+</div>
+
+{{-- Data riwayat + detail aspirasi untuk JS --}}
+<script type="application/json" id="historiesData">
+@php
+    $dataMap = [];
+    foreach($aspirasis as $aspirasi) {
+        $dataMap[$aspirasi->id_aspirasi] = [
+            'nis' => $aspirasi->nis,
+            'nama' => $aspirasi->siswa->name ?? '-',
+            'kelas' => $aspirasi->siswa->kelas ?? '-',
+            'kategori' => $aspirasi->kategori->ket_kategori,
+            'lokasi' => $aspirasi->lokasi,
+            'ket' => $aspirasi->ket,
+            'status' => $aspirasi->status,
+            'feedback' => $aspirasi->feedback,
+            'foto_url' => $aspirasi->foto ? asset('storage/pengaduan/' . $aspirasi->foto) : null,
+            'tanggal' => $aspirasi->created_at->format('d M Y H:i'),
+            'histories' => $aspirasi->histories->map(function($h) {
+                return [
+                    'status' => $h->status,
+                    'feedback' => $h->feedback,
+                    'changed_by' => $h->changed_by,
+                    'created_at' => $h->created_at->format('d M Y H:i'),
+                ];
+            })->toArray(),
+        ];
+    }
+    echo json_encode($dataMap);
+@endphp
+</script>
+
 <script>
+    const historiesData = JSON.parse(document.getElementById('historiesData').textContent);
+
     // --- Fungsi untuk Modal Edit (Dengan Blur) ---
     function openEditModal(id, currentStatus, currentFeedback) {
         document.getElementById('editForm').action = '/admin/aspirasi/' + id;
@@ -705,13 +846,81 @@
         document.body.style.overflow = 'auto';
     }
 
+    // --- Fungsi untuk Modal Riwayat ---
+    function openHistoryModal(id) {
+        const data = historiesData[id];
+        if (!data) return;
+
+        const histories = data.histories || [];
+        const body = document.getElementById('historyModalBody');
+        let html = '';
+
+        // Detail Pengaduan
+        html += '<div style="margin-bottom:18px;">';
+        if (data.foto_url) {
+            html += '<div style="text-align:center;margin-bottom:12px;"><img src="' + data.foto_url + '" style="max-width:100%;max-height:180px;border-radius:10px;border:1px solid rgba(93,64,55,0.1);" alt="Foto"></div>';
+        }
+        html += '<table style="width:100%;font-size:0.9rem;">';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);width:100px;">NIS</td><td style="padding:4px 8px;">' + data.nis + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Nama</td><td style="padding:4px 8px;">' + data.nama + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Kelas</td><td style="padding:4px 8px;">' + data.kelas + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Kategori</td><td style="padding:4px 8px;">' + data.kategori + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Lokasi</td><td style="padding:4px 8px;">' + data.lokasi + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Tanggal</td><td style="padding:4px 8px;">' + data.tanggal + '</td></tr>';
+        html += '</table>';
+        html += '<div style="margin-top:10px;padding:10px 12px;background:var(--light);border-radius:8px;font-size:0.9rem;line-height:1.5;">';
+        html += '<strong style="color:var(--accent);">Keterangan:</strong><br>' + data.ket;
+        html += '</div>';
+        if (data.feedback) {
+            html += '<div style="margin-top:8px;padding:10px 12px;background:#e8f5e9;border-radius:8px;font-size:0.9rem;line-height:1.5;">';
+            html += '<strong style="color:#2e7d32;"><i class="fas fa-comment-dots me-1"></i>Feedback:</strong><br>' + data.feedback;
+            html += '</div>';
+        }
+        html += '</div>';
+
+        // Timeline Riwayat
+        html += '<hr style="border-color:rgba(93,64,55,0.1);margin:15px 0;">';
+        html += '<h6 style="font-weight:700;color:var(--dark);margin-bottom:12px;"><i class="fas fa-clock-rotate-left me-1"></i>Riwayat Perubahan</h6>';
+
+        if (histories.length === 0) {
+            html += '<div class="no-history"><i class="fas fa-inbox" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>Belum ada riwayat perubahan status</div>';
+        } else {
+            html += '<div class="history-timeline">';
+            histories.forEach(function(h) {
+                let statusClass = 'status-menunggu';
+                if (h.status === 'Proses') statusClass = 'status-proses';
+                else if (h.status === 'Selesai') statusClass = 'status-selesai';
+
+                html += '<div class="history-item">';
+                html += '<div class="history-status"><span class="status-badge ' + statusClass + '" style="padding:3px 10px;font-size:0.8rem;">' + h.status + '</span></div>';
+                if (h.feedback) {
+                    html += '<div class="history-feedback"><i class="fas fa-comment-dots me-1"></i>' + h.feedback + '</div>';
+                }
+                html += '<div class="history-meta"><i class="fas fa-user me-1"></i>' + h.changed_by + ' &bull; <i class="fas fa-clock me-1"></i>' + h.created_at + '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+        }
+
+        body.innerHTML = html;
+        document.getElementById('historyModalBackdrop').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeHistoryModal(event) {
+        if (event.target.id === 'historyModalBackdrop') closeHistoryModalDirect();
+    }
+
+    function closeHistoryModalDirect() {
+        document.getElementById('historyModalBackdrop').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
     // --- Fungsi untuk Modal Detail (Tanpa Blur) ---
     function showSimpleModal(title, content) {
         document.getElementById('modalTitleSimple').innerText = title;
         document.getElementById('modalBodySimple').innerText = content;
         document.getElementById('detailModalSimple').style.display = 'block';
-        // Tidak perlu lock scroll body jika tidak mau, tapi biasanya bagus untuk fokus
-        // document.body.style.overflow = 'hidden';
     }
 
     function closeSimpleModal(event) {
@@ -720,7 +929,6 @@
 
     function closeSimpleModalDirect() {
         document.getElementById('detailModalSimple').style.display = 'none';
-        // document.body.style.overflow = 'auto';
     }
 
     // Close with ESC key
@@ -728,6 +936,7 @@
         if (event.key === 'Escape') {
             closeEditModalDirect();
             closeSimpleModalDirect();
+            closeHistoryModalDirect();
         }
     });
 </script>

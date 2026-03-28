@@ -313,7 +313,7 @@
                         <span class="nav-text">Daftar Pengaduan</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('admin.aspirasi.riwayat') }}" class="nav-link {{ request()->routeIs('admin.aspirasi.riwayat') ? 'active' : '' }}">
                         <i class="fas fa-history"></i>
                         <span class="nav-text">Riwayat Pengaduan</span>
@@ -324,7 +324,7 @@
                         <i class="fas fa-chart-bar"></i>
                         <span class="nav-text">Laporan</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item mt-auto mb-3">
                     <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
                         @csrf
@@ -350,7 +350,7 @@
                         <span class="nav-text">Pengaduan Saya</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('siswa.aspirasi.riwayat') }}" class="nav-link {{ request()->routeIs('siswa.aspirasi.riwayat') ? 'active' : '' }}">
                         <i class="fas fa-history"></i>
                         <span class="nav-text">Riwayat Pengaduan</span>
@@ -361,7 +361,7 @@
                         <i class="fas fa-chart-line"></i>
                         <span class="nav-text">Progres Pengaduan</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item mt-auto mb-3">
                     <form method="POST" action="{{ route('siswa.logout') }}" class="d-inline">
                         @csrf

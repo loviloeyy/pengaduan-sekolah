@@ -52,9 +52,10 @@ Route::prefix('siswa')->name('siswa.')->group(function () {
         Route::get('/aspirasi', [SiswaAspirasiController::class, 'index'])->name('aspirasi.index');
         Route::get('/aspirasi/create', [SiswaAspirasiController::class, 'create'])->name('aspirasi.create');
         Route::post('/aspirasi', [SiswaAspirasiController::class, 'store'])->name('aspirasi.store');
+        Route::get('/aspirasi/{id}', [SiswaAspirasiController::class, 'show'])->name('aspirasi.show');
         Route::delete('/aspirasi/{id}', [SiswaAspirasiController::class, 'destroy'])->name('aspirasi.destroy');
-        Route::get('/aspirasi/riwayat', [SiswaAspirasiController::class, 'riwayat'])->name('aspirasi.riwayat');
-        Route::get('/aspirasi/ringkasan', [SiswaAspirasiController::class, 'ringkasan'])->name('aspirasi.ringkasan');
+        // Route::get('/aspirasi/riwayat', [SiswaAspirasiController::class, 'riwayat'])->name('aspirasi.riwayat');
+        // Route::get('/aspirasi/ringkasan', [SiswaAspirasiController::class, 'ringkasan'])->name('aspirasi.ringkasan');
 
         // Logout
         Route::post('/logout', [LoginController::class, 'logoutSiswa'])->name('logout');
