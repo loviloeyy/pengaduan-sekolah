@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminAspirasiController;
 use App\Http\Controllers\SiswaDashboardController;
 use App\Http\Controllers\SiswaAspirasiController;
+use App\Http\Controllers\SiswaController;
 
 // Halaman Login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -31,6 +32,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/aspirasi/riwayat', [AdminAspirasiController::class, 'riwayat'])->name('aspirasi.riwayat');
         Route::get('/aspirasi/ringkasan', [AdminAspirasiController::class, 'ringkasan'])->name('aspirasi.ringkasan');
 
+        Route::resource('/siswa', SiswaController::class);
+
         // Logout
         Route::post('/logout', [LoginController::class, 'logoutAdmin'])->name('logout');
     });
@@ -53,6 +56,8 @@ Route::prefix('siswa')->name('siswa.')->group(function () {
         Route::get('/aspirasi/create', [SiswaAspirasiController::class, 'create'])->name('aspirasi.create');
         Route::post('/aspirasi', [SiswaAspirasiController::class, 'store'])->name('aspirasi.store');
         Route::get('/aspirasi/{id}', [SiswaAspirasiController::class, 'show'])->name('aspirasi.show');
+        Route::get('/aspirasi/{aspirasi}/edit', [SiswaAspirasiController::class, 'edit'])->name('aspirasi.edit');
+        Route::put('/aspirasi/{aspirasi}', [SiswaAspirasiController::class, 'update'])->name('aspirasi.update');
         Route::delete('/aspirasi/{id}', [SiswaAspirasiController::class, 'destroy'])->name('aspirasi.destroy');
         // Route::get('/aspirasi/riwayat', [SiswaAspirasiController::class, 'riwayat'])->name('aspirasi.riwayat');
         // Route::get('/aspirasi/ringkasan', [SiswaAspirasiController::class, 'ringkasan'])->name('aspirasi.ringkasan');

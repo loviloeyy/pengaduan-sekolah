@@ -4,30 +4,28 @@
 
 @section('content')
 <style>
-    /* Palet warna Earth Tone */
     :root {
-        --primary: #5D4037;      /* Coklat tua (kayu jati) */
-        --secondary: #795548;     /* Coklat sedang */
-        --accent: #8D6E63;        /* Coklat muda */
-        --light: #F5F1EB;         /* Beige terang */
-        --dark: #3E2723;          /* Dark brown */
-        --success: #66BB6A;       /* Hijau segar */
-        --warning: #FFA726;       /* Kuning emas */
-        --danger: #EF5350;        /* Merah terang */
+        --primary: #2C3E50;
+        --secondary: #3498DB;
+        --accent: #95A5A6;
+        --light: #ECF0F1;
+        --dark: #2C3E50;
+        --success: #27AE60;
+        --warning: #F39C12;
+        --danger: #E74C3C;
 
-        /* Gradient earth tone */
-        --card-gradient: linear-gradient(135deg, #ffffff, #f8f4f0);
-        --header-gradient: linear-gradient(135deg, #5D4037, #795548);
-        --btn-shadow: 0 4px 12px rgba(93, 64, 55, 0.25);
+        --card-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
+        --header-gradient: linear-gradient(135deg, #2C3E50, #34495E);
+        --btn-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
     }
 
     .earth-card {
         background: var(--card-gradient);
         border: none;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
+        box-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
         overflow: hidden;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
     }
 
     .earth-card-header {
@@ -42,16 +40,17 @@
     }
 
     .form-control {
-        border: 1px solid rgba(93, 64, 55, 0.2);
+        border: 1px solid rgba(44, 62, 80, 0.2);
         border-radius: 8px;
         padding: 12px 15px;
         font-family: 'Poppins', sans-serif;
         transition: all 0.3s ease;
+        background-color: #fff;
     }
 
     .form-control:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 0.2rem rgba(93, 64, 55, 0.25);
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
     }
 
     .form-label {
@@ -62,20 +61,21 @@
     }
 
     .form-select {
-        border: 1px solid rgba(93, 64, 55, 0.2);
+        border: 1px solid rgba(44, 62, 80, 0.2);
         border-radius: 8px;
         padding: 12px 15px;
         font-family: 'Poppins', sans-serif;
         transition: all 0.3s ease;
+        background-color: #fff;
     }
 
     .form-select:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 0.2rem rgba(93, 64, 55, 0.25);
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
     }
 
     .btn-earth {
-        background: var(--primary);
+        background: var(--secondary);
         border: none;
         border-radius: 8px;
         padding: 12px 24px;
@@ -89,9 +89,10 @@
     }
 
     .btn-earth:hover {
-        background: #4E342E;
+        background: #2980B9;
         transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(93, 64, 55, 0.3);
+        box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        color: white;
     }
 
     .btn-outline-earth {
@@ -111,7 +112,7 @@
         background: var(--primary);
         color: white;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(93, 64, 55, 0.2);
+        box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
     }
 
     .alert {
@@ -121,14 +122,14 @@
     }
 
     .alert-success {
-        background-color: #e8f5e9;
-        color: #2e7d32;
+        background-color: #d4edda;
+        color: #155724;
         border-left: 4px solid var(--success);
     }
 
     .alert-danger {
-        background-color: #ffebee;
-        color: #c62828;
+        background-color: #f8d7da;
+        color: #721c24;
         border-left: 4px solid var(--danger);
     }
 
@@ -142,25 +143,24 @@
         border-color: var(--danger) !important;
     }
 
-    /* Upload area styling */
     .upload-area {
-        border: 2px dashed rgba(93, 64, 55, 0.3);
+        border: 2px dashed rgba(44, 62, 80, 0.3);
         border-radius: 12px;
         padding: 30px;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(240, 242, 245, 0.5);
     }
 
     .upload-area:hover {
-        border-color: var(--primary);
-        background: rgba(93, 64, 55, 0.05);
+        border-color: var(--secondary);
+        background: rgba(52, 152, 219, 0.05);
     }
 
     .upload-icon {
         font-size: 3rem;
-        color: var(--primary);
+        color: var(--secondary);
         margin-bottom: 15px;
     }
 
@@ -171,7 +171,7 @@
     }
 
     .upload-hint {
-        color: rgba(62, 39, 35, 0.6);
+        color: var(--muted);
         font-size: 0.9rem;
     }
 
@@ -181,6 +181,8 @@
         border-radius: 8px;
         margin-top: 15px;
         display: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border: 1px solid rgba(44, 62, 80, 0.1);
     }
 
     @media (max-width: 768px) {
@@ -204,7 +206,7 @@
     <div class="col-md-8 offset-md-2">
         <div class="earth-card">
             <div class="earth-card-header">
-                <h4>Ajukan Pengaduan Sarana Sekolah</h4>
+                <h4>Ajukan Pengaduan Sekolah</h4>
             </div>
             <div class="card-body p-4">
                 @if(session('success'))
@@ -260,7 +262,6 @@
                         @enderror
                     </div>
 
-                    <!-- Upload Foto -->
                     <div class="mb-4">
                         <label class="form-label">Upload Foto</label>
                         <div class="upload-area" id="uploadArea">
@@ -297,28 +298,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const fotoInput = document.getElementById('fotoInput');
     const previewImage = document.getElementById('previewImage');
 
-    // Click upload area to trigger file input
     uploadArea.addEventListener('click', function() {
         fotoInput.click();
     });
 
-    // Drag and drop functionality
     uploadArea.addEventListener('dragover', function(e) {
         e.preventDefault();
-        this.style.borderColor = '#5D4037';
-        this.style.backgroundColor = 'rgba(93, 64, 55, 0.1)';
+        this.style.borderColor = '#3498DB';
+        this.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
     });
 
     uploadArea.addEventListener('dragleave', function(e) {
         e.preventDefault();
-        this.style.borderColor = 'rgba(93, 64, 55, 0.3)';
-        this.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        this.style.borderColor = 'rgba(44, 62, 80, 0.3)';
+        this.style.backgroundColor = 'rgba(240, 242, 245, 0.5)';
     });
 
     uploadArea.addEventListener('drop', function(e) {
         e.preventDefault();
-        this.style.borderColor = 'rgba(93, 64, 55, 0.3)';
-        this.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        this.style.borderColor = 'rgba(44, 62, 80, 0.3)';
+        this.style.backgroundColor = 'rgba(240, 242, 245, 0.5)';
 
         if (e.dataTransfer.files.length) {
             fotoInput.files = e.dataTransfer.files;
@@ -326,7 +325,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // File selection handler
     fotoInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
             handleFileSelect(this.files[0]);

@@ -74,21 +74,21 @@
         }
 
         .status-menunggu {
-            background-color: #f5f1eb;
-            color: #5d4037;
-            border-color: #8d6e63;
+            background-color: #FFF9C4;
+            color: #F57F17;
+            border-color: #F57F17;
         }
 
         .status-proses {
-            background-color: #f5f1eb;
-            color: #795548;
-            border-color: #8d6e63;
+            background-color: #B3E5FC;
+            color: #0277BD;
+            border-color: #81D4FA;
         }
 
         .status-selesai {
-            background-color: #f5f1eb;
-            color: #5d4037;
-            border-color: #8d6e63;
+            background-color: #C8E6C9;
+            color: #2E7D32;
+            border-color: #A5D6A7;
         }
 
         /* Warna kategori earth tone */
@@ -245,9 +245,13 @@
                         <p>{{ $aspirasi->lokasi ?? '-' }}</p>
                     </div>
                     <div class="col-md-6">
-                        <h6 class="text-muted mb-2">Tanggal Dibuat</h6>
-                        <p>{{ $aspirasi->created_at->format('d M Y H:i') }}</p>
-                    </div>
+                    <h6 class="text-muted mb-2">Tanggal Dibuat</h6>
+                    <p>
+                        {{ \Carbon\Carbon::parse($aspirasi->created_at)
+                            ->setTimezone('Asia/Jakarta')
+                            ->locale('id_ID')
+                            ->isoFormat('D MMMM Y HH:mm') }}
+                    </p>
                 </div>
 
                 <div class="row mb-3">
@@ -295,8 +299,12 @@
                                             </div>
                                         @endif
                                         <div class="history-date">
-                                            <i class="fas fa-clock me-1"></i>{{ $history->created_at->format('d M Y H:i') }}
-                                        </div>
+                                        <i class="fas fa-clock me-1"></i>
+                                        {{ \Carbon\Carbon::parse($history->created_at)
+                                            ->setTimezone('Asia/Jakarta')
+                                            ->locale('id_ID')
+                                            ->isoFormat('D MMMM Y HH:mm') }}
+                                    </div>
                                     </div>
                                 @endforeach
                             </div>

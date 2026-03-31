@@ -14,9 +14,9 @@ class SiswaAspirasiController extends Controller
     {
         $siswa = Auth::guard('siswa')->user();
         $aspirasis = Aspirasi::where('nis', $siswa->nis)
-                            ->with('kategori')
-                            ->latest()
-                            ->paginate(10);
+            ->with('kategori')
+            ->latest()
+            ->paginate(10);
         return view('siswa.aspirasi.index', compact('aspirasis'));
     }
 
@@ -60,9 +60,9 @@ class SiswaAspirasiController extends Controller
     {
         $siswa = Auth::guard('siswa')->user();
         $aspirasis = Aspirasi::where('nis', $siswa->nis)
-                            ->with('kategori')
-                            ->latest()
-                            ->paginate(15);
+            ->with('kategori')
+            ->latest()
+            ->paginate(15);
         return view('siswa.aspirasi.riwayat', compact('aspirasis'));
     }
 
@@ -70,20 +70,60 @@ class SiswaAspirasiController extends Controller
     {
         $siswa = Auth::guard('siswa')->user();
         $aspirasis = Aspirasi::where('nis', $siswa->nis)
-                            ->with('kategori')
-                            ->latest()
-                            ->get();
+            ->with('kategori')
+            ->latest()
+            ->get();
 
         return view('siswa.aspirasi.ringkasan', compact('aspirasis'));
+    }
+
+    public function edit(Aspirasi $aspirasi)
+    {
+        $kategoris = Kategori::all();
+        return view('siswa.aspirasi.edit', compact('kategoris', 'aspirasi'));
+    }
+
+    public function update(Request $request, Aspirasi $aspirasi)
+    {
+        $request->validate([
+            'id_kategori' => 'required|integer',
+            'lokasi' => 'required|string|max:50',
+            'ket' => 'required|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $aspirasi->id_kategori = $request->id_kategori;
+        $aspirasi->lokasi = $request->lokasi;
+        $aspirasi->ket = $request->ket;
+
+        // Handle upload foto baru
+        if ($request->hasFile('foto')) {
+
+            // Hapus foto lama jika ada
+            if ($aspirasi->foto && Storage::exists('public/pengaduan/' . $aspirasi->foto)) {
+                Storage::delete('public/pengaduan/' . $aspirasi->foto);
+            }
+
+            $file = $request->file('foto');
+            $filename = 'pengaduan_' . time() . '_' . $aspirasi->id_aspirasi . '.' . $file->getClientOriginalExtension();
+            Storage::putFileAs('public/pengaduan', $file, $filename);
+
+            $aspirasi->foto = $filename;
+        }
+
+        $aspirasi->save();
+
+        return redirect()->route('siswa.aspirasi.index')
+            ->with('success', 'Pengaduan berhasil diperbarui!');
     }
 
     public function show($id)
     {
         $siswa = Auth::guard('siswa')->user();
         $aspirasi = Aspirasi::where('id_aspirasi', $id)
-                            ->where('nis', $siswa->nis)
-                            ->with(['kategori', 'histories'])
-                            ->firstOrFail();
+            ->where('nis', $siswa->nis)
+            ->with(['kategori', 'histories'])
+            ->firstOrFail();
 
         return view('siswa.aspirasi.show', compact('aspirasi'));
     }
@@ -93,8 +133,8 @@ class SiswaAspirasiController extends Controller
     {
         // Pastikan pengaduan milik siswa yang sedang login
         $aspirasi = Aspirasi::where('id_aspirasi', $id)
-                            ->where('nis', auth()->guard('siswa')->user()->nis)
-                            ->firstOrFail();
+            ->where('nis', auth()->guard('siswa')->user()->nis)
+            ->firstOrFail();
 
         // Hapus file foto jika ada
         if ($aspirasi->foto) {

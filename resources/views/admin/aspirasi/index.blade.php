@@ -4,28 +4,31 @@
 
 @section('content')
 <style>
-    /* Palet warna Earth Tone */
+
     :root {
-        --primary: #5D4037;
-        --secondary: #795548;
-        --accent: #8D6E63;
-        --light: #F5F1EB;
-        --dark: #3E2723;
-        --white: #ffffff;
-        --card-gradient: linear-gradient(135deg, #ffffff, #f8f4f0);
-        --header-gradient: linear-gradient(135deg, #5D4037, #795548);
+        --primary: #2C3E50;
+        --secondary: #3498DB;
+        --dark: #95A5A6;
+        --light: #ECF0F1;
+        --dark: #2C3E50;
+        --muted: #7F8C8D;
+
+        --card-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
+        --header-gradient: linear-gradient(135deg, #2C3E50, #34495E);
+
+        --card-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
+        --btn-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
     }
 
-    body { background-color: #faf9f7; }
+    body { background-color: var(--light); }
 
-    /* Card Styling */
     .earth-card {
         background: var(--card-gradient);
         border: none;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
+        box-shadow: var(--card-shadow);
         overflow: hidden;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
         margin-bottom: 24px;
     }
 
@@ -44,15 +47,15 @@
     }
 
     .btn-riwayat {
-        background-color: var(--white);
-        color: var(--primary);
+        background-color: var(--secondary);
+        color: white;
         border: none;
         border-radius: 50px;
         padding: 10px 20px;
         font-weight: 800;
         font-size: 0.75rem;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
         text-decoration: none;
         display: inline-flex;
         align-items: center;
@@ -62,10 +65,10 @@
     }
 
     .btn-riwayat:hover {
-        background-color: var(--light);
-        color: var(--dark);
+        background-color: #2980B9; /* Biru lebih gelap */
+        color: white;
         transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
     }
 
     .btn-riwayat i {
@@ -73,28 +76,27 @@
         font-size: 1.1rem;
     }
 
-    /* Filter Panel */
     .filter-panel {
-        background: var(--light);
+        background: #F4F6F7;
         border-radius: 12px;
         padding: 20px;
         margin-bottom: 24px;
-        border: 1px solid rgba(93, 64, 55, 0.1);
+        border: 1px solid rgba(44, 62, 80, 0.05);
     }
     .form-label { font-weight: 600; color: var(--dark); margin-bottom: 8px; font-size: 0.9rem; }
     .form-control, .form-select {
         border-radius: 8px;
-        border: 1px solid rgba(93, 64, 55, 0.2);
+        border: 1px solid rgba(44, 62, 80, 0.2);
         padding: 8px 12px;
         background-color: var(--white);
         color: var(--dark);
     }
     .form-control:focus, .form-select:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 0.2rem rgba(93, 64, 55, 0.15);
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
     }
     .btn-primary {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        background: linear-gradient(135deg, var(--secondary), #3498DB);
         border: none;
         border-radius: 8px;
         padding: 8px 16px;
@@ -104,7 +106,7 @@
     }
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(93, 64, 55, 0.3);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
         color: white;
     }
     .btn-outline-secondary {
@@ -122,7 +124,7 @@
     .table-responsive {
         border-radius: 12px;
         overflow-x: auto;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
         -webkit-overflow-scrolling: touch;
     }
 
@@ -132,35 +134,36 @@
     }
 
     .table thead {
-        background: var(--primary);
-        color: white;
+        background: #F8F9FA;
+        color: var(--dark);
+        border-bottom: 2px solid #E0E0E0;
     }
 
     .table th {
-        font-weight: 600;
-        padding: 12px 10px;
+        font-weight: 700;
+        padding: 14px 12px;
         font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         white-space: nowrap;
         border: none;
+        color: var(--dark);
     }
 
     .table td {
-        padding: 12px 10px;
-        border-top: 1px solid rgba(93, 64, 55, 0.08);
+        padding: 14px 12px;
+        border-top: 1px solid #F0F0F0;
         font-size: 0.9rem;
         vertical-align: middle;
         white-space: nowrap;
         color: var(--dark);
     }
 
-    /* Kolom Keterangan - BISA DIKLIK */
     .table td.col-keterangan {
         white-space: normal;
         max-width: 180px;
         line-height: 1.4;
-        color: var(--primary);
+        color: var(--secondary);
         text-decoration: underline dotted;
         text-underline-offset: 3px;
         cursor: pointer;
@@ -168,30 +171,27 @@
     }
 
     .table td.col-keterangan:hover {
-        color: var(--secondary);
+        color: var(--primary);
         text-decoration: underline;
         font-weight: 600;
     }
 
-    /* Kolom Tanggal */
     .table td.col-tanggal {
-        font-weight: 500;
+        font-weight: 600;
         color: var(--dark);
         font-size: 0.9rem;
         text-align: left;
-        background-color: #ffffff;
-        border-left: 1px solid rgba(93, 64, 55, 0.08);
+        background-color: transparent;
         line-height: 1.5;
     }
 
     .table-hover tbody tr:hover {
-        background: rgba(93, 64, 55, 0.02);
+        background: #F4F6F7;
     }
     .table-hover tbody tr:hover td.col-tanggal {
-        background-color: #fafafa;
+        background-color: #F4F6F7;
     }
 
-    /* Badge Kategori */
     .badge-pill {
         padding: 6px 12px;
         border-radius: 50px;
@@ -200,12 +200,12 @@
         display: inline-block;
         white-space: nowrap;
         transition: all 0.2s;
+        background: #EBF5FB;
+        color: var(--primary);
+        border: 1px solid #D6EAF8;
     }
 
     .badge-kategori {
-        background-color: #f5f1eb;
-        color: #5d4037;
-        border: 1px solid #8d6e63;
         cursor: pointer;
     }
     .badge-kategori:hover {
@@ -222,14 +222,14 @@
         font-weight: 600;
         font-size: 0.85rem;
         display: inline-block;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid transparent;
         white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    .status-menunggu { background-color: #fff9db; color: #856404; }
-    .status-proses { background-color: #d1ecf1; color: #0c5460; }
-    .status-selesai { background-color: #d4edda; color: #155724; }
+    .status-menunggu { background-color: #FFF3CD; color: #856404; border-color: #FFE69C; }
+    .status-proses { background-color: #B3E5FC; color: #0277BD; border-color: #81D4FA; }
+    .status-selesai { background-color: #C8E6C9; color: #2E7D32; border-color: #A5D6A7; }
 
-    /* Modern Action Buttons */
     .action-cell {
         text-align: center;
         white-space: nowrap;
@@ -242,8 +242,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--light);
-        color: var(--primary);
+        background-color: #EBF5FB;
+        color: var(--secondary);
         border: 1px solid transparent;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
@@ -253,10 +253,10 @@
     }
 
     .btn-action-modern:hover {
-        background-color: var(--primary);
+        background-color: var(--secondary);
         color: white;
         transform: rotate(90deg) scale(1.1);
-        box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
+        box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
     }
 
     .btn-history-modern {
@@ -266,7 +266,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background-color: #e8f5e9;
+        background-color: #E8F5E9;
         color: #2e7d32;
         border: 1px solid transparent;
         transition: all 0.3s ease;
@@ -290,7 +290,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background-color: #ffebee;
+        background-color: #FFEBEE;
         color: #c62828;
         border: 1px solid transparent;
         transition: all 0.3s ease;
@@ -320,7 +320,7 @@
         top: 0;
         bottom: 0;
         width: 3px;
-        background: linear-gradient(to bottom, var(--primary), var(--accent));
+        background: linear-gradient(to bottom, var(--secondary), var(--dark));
         border-radius: 3px;
     }
 
@@ -328,15 +328,15 @@
         position: relative;
         padding: 12px 15px 12px 50px;
         margin-bottom: 8px;
-        background: var(--light);
+        background: #F4F6F7;
         border-radius: 10px;
-        border: 1px solid rgba(93, 64, 55, 0.08);
+        border: 1px solid rgba(44, 62, 80, 0.08);
         transition: all 0.2s ease;
     }
 
     .history-item:hover {
         transform: translateX(4px);
-        box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1);
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
     }
 
     .history-item::before {
@@ -347,9 +347,9 @@
         width: 14px;
         height: 14px;
         border-radius: 50%;
-        background: var(--primary);
+        background: var(--secondary);
         border: 3px solid white;
-        box-shadow: 0 0 0 2px var(--primary);
+        box-shadow: 0 0 0 2px var(--secondary);
         z-index: 1;
     }
 
@@ -367,24 +367,23 @@
 
     .history-meta {
         font-size: 0.75rem;
-        color: var(--accent);
+        color: var(--dark);
     }
 
     .no-history {
         text-align: center;
         padding: 20px;
-        color: var(--accent);
+        color: var(--dark);
         font-style: italic;
     }
 
-    /* Foto */
     .foto-pengaduan {
         width: 60px;
         height: 60px;
         object-fit: cover;
         border-radius: 8px;
         margin: 0 auto;
-        border: 1px solid rgba(93, 64, 55, 0.1);
+        border: 1px solid #E0E0E0;
         display: block;
     }
     .foto-placeholder {
@@ -393,44 +392,37 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--light);
+        background: #F4F6F7;
         border-radius: 8px;
-        border: 1px solid rgba(93, 64, 55, 0.1);
-        color: var(--accent);
+        border: 1px solid #E0E0E0;
+        color: var(--dark);
         margin: 0 auto;
     }
 
-    /* Pagination */
     .pagination .page-link {
-        color: var(--primary);
-        border: 1px solid rgba(93, 64, 55, 0.2);
+        color: var(--secondary);
+        border: 1px solid rgba(52, 152, 219, 0.2);
         border-radius: 6px;
         padding: 8px 12px;
         margin: 0 4px;
     }
     .pagination .page-item.active .page-link {
-        background-color: var(--primary);
-        border-color: var(--primary);
+        background-color: var(--secondary);
+        border-color: var(--secondary);
         color: white;
     }
     .pagination .page-link:hover {
-        background-color: rgba(93, 64, 55, 0.1);
+        background-color: rgba(52, 152, 219, 0.1);
     }
 
-    /* Empty State */
     .empty-state {
         text-align: center;
         padding: 40px 20px;
-        color: var(--accent);
+        color: var(--dark);
     }
     .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.6; }
     .empty-state h5 { color: var(--primary); font-weight: 600; }
 
-    /* ========================================
-       MODAL STYLES (PERBEDAAN UTAMA DI SINI)
-       ======================================== */
-
-    /* 1. Modal Detail (Kategori/Keterangan) - TANPA BLUR */
     .modal-custom-simple {
         display: none;
         position: fixed;
@@ -439,11 +431,10 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(62, 39, 35, 0.4); /* Gelap tapi TIDAK BLUR */
+        background-color: rgba(44, 62, 80, 0.5);
         animation: fadeIn 0.3s;
     }
 
-    /* 2. Modal Edit (Aksi) - DENGAN BLUR */
     .modal-custom-blur {
         display: none;
         position: fixed;
@@ -452,8 +443,8 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(62, 39, 35, 0.6);
-        backdrop-filter: blur(5px); /* EFEK BLUR HANYA DI SINI */
+        background-color: rgba(44, 62, 80, 0.6);
+        backdrop-filter: blur(5px);
         animation: fadeIn 0.3s;
     }
 
@@ -464,7 +455,7 @@
         border-radius: 20px;
         width: 90%;
         max-width: 500px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
         overflow: hidden;
@@ -515,7 +506,6 @@
         overflow-y: auto;
     }
 
-    /* Form Elements in Modal */
     .form-group-modern { margin-bottom: 20px; }
     .form-group-modern label {
         display: block;
@@ -536,14 +526,14 @@
     }
     .form-control-modern:focus {
         outline: none;
-        border-color: var(--primary);
+        border-color: var(--secondary);
         background: white;
-        box-shadow: 0 0 0 4px rgba(93, 64, 55, 0.1);
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
     }
     .btn-submit-modern {
         width: 100%;
         padding: 12px;
-        background: var(--primary);
+        background: var(--secondary);
         color: white;
         border: none;
         border-radius: 10px;
@@ -557,9 +547,9 @@
         gap: 8px;
     }
     .btn-submit-modern:hover {
-        background: var(--secondary);
+        background: #2980B9;
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(93, 64, 55, 0.3);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
     }
 
     @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
@@ -578,12 +568,7 @@
         <div class="col-md-12">
             <div class="earth-card">
                 <div class="earth-card-header">
-                    <span><i class="fas fa-clipboard-list me-2"></i>Daftar Pengaduan Sarana Sekolah</span>
-
-                    <!-- Tombol Riwayat yang Sangat Menonjol -->
-                    <a href="{{ route('admin.aspirasi.riwayat') }}" class="btn-riwayat">
-                        <i class="fas fa-history"></i> Lihat Riwayat Lengkap
-                    </a>
+                    <span></i>Daftar Pengaduan Sarana Sekolah</span>
                 </div>
 
                 <div class="card-body-custom">
@@ -600,7 +585,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">NIS Siswa</label>
-                                <input type="text" name="nis" class="form-control form-control-sm" placeholder="Cari NIS..." value="{{ request('nis') }}">
+                                <input type="text" name="nis" class="form-control form-control-sm" placeholder="Cari NIS" value="{{ request('nis') }}">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Kategori</label>
@@ -615,7 +600,7 @@
                             </div>
                             <div class="col-12 mt-3">
                                 <button type="submit" class="btn btn-primary btn-sm me-2">
-                                    <i class="fas fa-filter me-1"></i> Filter Data
+                                   <i class="fas fa-search me-2"></i>Filter Data
                                 </button>
                                 @if(request()->anyFilled(['tanggal', 'bulan', 'nis', 'kategori']))
                                     <a href="{{ route('admin.aspirasi.index') }}" class="btn btn-outline-secondary btn-sm">
@@ -662,9 +647,8 @@
                                             {{ $aspirasi->siswa->kelas ?? '-' }}
                                         </td>
 
-                                        <!-- Badge Kategori -->
                                         <td>
-                                            <span class="badge-pill badge-kategori" onclick="showSimpleModal('Detail Kategori', '{{ $aspirasi->kategori->ket_kategori }}')">
+                                            <span class="badge-pill badge-kategori" style="cursor: default;">
                                                 {{ $aspirasi->kategori->ket_kategori }}
                                             </span>
                                         </td>
@@ -735,7 +719,7 @@
     </div>
 </div>
 
-<!-- 1. MODAL EDIT STATUS (Dengan Blur) -->
+<!-- MODAL EDIT STATUS -->
 <div id="editModalBackdrop" class="modal-custom-blur" onclick="closeEditModal(event)">
     <div class="modal-content-custom">
         <div class="modal-header-custom">
@@ -751,14 +735,14 @@
                     <label for="modalStatus">Status Pengaduan</label>
                     <select name="status" id="modalStatus" class="form-control-modern">
                         <option value="Menunggu">Menunggu</option>
-                        <option value="Proses">Sedang Diproses</option>
+                        <option value="Proses">Diproses</option>
                         <option value="Selesai">Selesai</option>
                     </select>
                 </div>
 
                 <div class="form-group-modern">
                     <label for="modalFeedback">Berikan Feedback</label>
-                    <textarea name="feedback" id="modalFeedback" class="form-control-modern" rows="4" placeholder="Tulis tanggapan atau solusi di sini..."></textarea>
+                    <textarea name="feedback" id="modalFeedback" class="form-control-modern" rows="4" placeholder="Tulis tanggapan di sini"></textarea>
                 </div>
 
                 <button type="submit" class="btn-submit-modern">
@@ -769,7 +753,7 @@
     </div>
 </div>
 
-<!-- 2. MODAL DETAIL (Tanpa Blur) -->
+<!-- MODAL DETAIL -->
 <div id="detailModalSimple" class="modal-custom-simple" onclick="closeSimpleModal(event)">
     <div class="modal-content-custom">
         <div class="modal-header-custom">
@@ -777,12 +761,11 @@
             <button class="close-btn" onclick="closeSimpleModalDirect()">&times;</button>
         </div>
         <div class="modal-body-custom" id="modalBodySimple">
-            <!-- Konten diisi JS -->
         </div>
     </div>
 </div>
 
-<!-- 3. MODAL RIWAYAT STATUS (Dengan Blur) -->
+<!-- MODAL RIWAYAT STATUS -->
 <div id="historyModalBackdrop" class="modal-custom-blur" onclick="closeHistoryModal(event)">
     <div class="modal-content-custom">
         <div class="modal-header-custom">
@@ -790,12 +773,11 @@
             <button class="close-btn" onclick="closeHistoryModalDirect()">&times;</button>
         </div>
         <div class="modal-body-custom" id="historyModalBody">
-            <!-- Diisi oleh JS -->
         </div>
     </div>
 </div>
 
-{{-- Data riwayat + detail aspirasi untuk JS --}}
+<!-- Data riwayat + detail aspirasi JS -->>
 <script type="application/json" id="historiesData">
 @php
     $dataMap = [];
@@ -810,13 +792,17 @@
             'status' => $aspirasi->status,
             'feedback' => $aspirasi->feedback,
             'foto_url' => $aspirasi->foto ? asset('storage/pengaduan/' . $aspirasi->foto) : null,
-            'tanggal' => $aspirasi->created_at->format('d M Y H:i'),
+            'tanggal' => \Carbon\Carbon::parse($aspirasi->created_at)
+                ->setTimezone('Asia/Jakarta')
+                ->format('d M Y H:i'),
             'histories' => $aspirasi->histories->map(function($h) {
                 return [
                     'status' => $h->status,
                     'feedback' => $h->feedback,
                     'changed_by' => $h->changed_by,
-                    'created_at' => $h->created_at->format('d M Y H:i'),
+                      'created_at' => \Carbon\Carbon::parse($h->created_at)
+                        ->setTimezone('Asia/Jakarta')
+                        ->format('d M Y H:i'),
                 ];
             })->toArray(),
         ];
@@ -858,18 +844,18 @@
         // Detail Pengaduan
         html += '<div style="margin-bottom:18px;">';
         if (data.foto_url) {
-            html += '<div style="text-align:center;margin-bottom:12px;"><img src="' + data.foto_url + '" style="max-width:100%;max-height:180px;border-radius:10px;border:1px solid rgba(93,64,55,0.1);" alt="Foto"></div>';
+            html += '<div style="text-align:center;margin-bottom:12px;"><img src="' + data.foto_url + '" style="max-width:100%;max-height:180px;border-radius:10px;border:1px solid rgba(44,62,80,0.1);" alt="Foto"></div>';
         }
         html += '<table style="width:100%;font-size:0.9rem;">';
-        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);width:100px;">NIS</td><td style="padding:4px 8px;">' + data.nis + '</td></tr>';
-        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Nama</td><td style="padding:4px 8px;">' + data.nama + '</td></tr>';
-        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Kelas</td><td style="padding:4px 8px;">' + data.kelas + '</td></tr>';
-        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Kategori</td><td style="padding:4px 8px;">' + data.kategori + '</td></tr>';
-        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Lokasi</td><td style="padding:4px 8px;">' + data.lokasi + '</td></tr>';
-        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--accent);">Tanggal</td><td style="padding:4px 8px;">' + data.tanggal + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--dark);width:100px;">NIS</td><td style="padding:4px 8px;">' + data.nis + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--dark);">Nama</td><td style="padding:4px 8px;">' + data.nama + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--dark);">Kelas</td><td style="padding:4px 8px;">' + data.kelas + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--dark);">Kategori</td><td style="padding:4px 8px;">' + data.kategori + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--dark);">Lokasi</td><td style="padding:4px 8px;">' + data.lokasi + '</td></tr>';
+        html += '<tr><td style="padding:4px 8px;font-weight:600;color:var(--dark);">Tanggal</td><td style="padding:4px 8px;">' + data.tanggal + '</td></tr>';
         html += '</table>';
         html += '<div style="margin-top:10px;padding:10px 12px;background:var(--light);border-radius:8px;font-size:0.9rem;line-height:1.5;">';
-        html += '<strong style="color:var(--accent);">Keterangan:</strong><br>' + data.ket;
+        html += '<strong style="color:var(--dark);">Keterangan:</strong><br>' + data.ket;
         html += '</div>';
         if (data.feedback) {
             html += '<div style="margin-top:8px;padding:10px 12px;background:#e8f5e9;border-radius:8px;font-size:0.9rem;line-height:1.5;">';
@@ -879,7 +865,7 @@
         html += '</div>';
 
         // Timeline Riwayat
-        html += '<hr style="border-color:rgba(93,64,55,0.1);margin:15px 0;">';
+        html += '<hr style="border-color:rgba(44,62,80,0.1);margin:15px 0;">';
         html += '<h6 style="font-weight:700;color:var(--dark);margin-bottom:12px;"><i class="fas fa-clock-rotate-left me-1"></i>Riwayat Perubahan</h6>';
 
         if (histories.length === 0) {
@@ -916,7 +902,6 @@
         document.body.style.overflow = 'auto';
     }
 
-    // --- Fungsi untuk Modal Detail (Tanpa Blur) ---
     function showSimpleModal(title, content) {
         document.getElementById('modalTitleSimple').innerText = title;
         document.getElementById('modalBodySimple').innerText = content;
@@ -931,7 +916,6 @@
         document.getElementById('detailModalSimple').style.display = 'none';
     }
 
-    // Close with ESC key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeEditModalDirect();

@@ -4,28 +4,24 @@
 
 @section('content')
 <style>
-    /* Font Poppins */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    /* Palet warna Coklat Eksklusif */
     :root {
-        --primary: #5D4037;      /* Coklat tua (kayu jati) */
-        --secondary: #795548;     /* Coklat sedang */
-        --accent: #8D6E63;        /* Coklat muda */
-        --light: #F5F1EB;         /* Beige terang */
-        --dark: #3E2723;          /* Dark brown */
-        --muted: #BCAAA4;         /* Coklat abu-abu */
+        --primary: #2C3E50;
+        --secondary: #3498DB;
+        --accent: #95A5A6;
+        --light: #ECF0F1;
+        --dark: #2C3E50;
+        --muted: #7F8C8D;
 
-        /* Gradient coklat */
-        --card-gradient: linear-gradient(135deg, #ffffff, #f9f5f0);
-        --stat-gradient-1: linear-gradient(135deg, #5D4037, #3E2723);
-        --stat-gradient-2: linear-gradient(135deg, #8D6E63, #795548);
-        --stat-gradient-3: linear-gradient(135deg, #5D4037, #5D4037);
-        --stat-gradient-4: linear-gradient(135deg, #BCAAA4, #A1887F);
+        --card-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
+        --stat-gradient-1: linear-gradient(135deg, #2C3E50, #34495E);
+        --stat-gradient-2: linear-gradient(135deg, #3498DB, #2980B9);
+        --stat-gradient-3: linear-gradient(135deg, #7F8C8D, #7F8C8D);
+        --stat-gradient-4: linear-gradient(135deg, #16A085, #16A085);
 
-        /* Shadow coklat */
-        --card-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
-        --btn-shadow: 0 4px 12px rgba(93, 64, 55, 0.2);
+        --card-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
+        --btn-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
     }
 
     body {
@@ -42,23 +38,24 @@
         box-shadow: var(--card-shadow);
         transition: all 0.3s ease;
         overflow: hidden;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
     }
 
     .modern-card:hover {
         transform: translateY(-3px);
-        box-shadow: 0 6px 25px rgba(93, 64, 55, 0.12);
+        box-shadow: 0 6px 25px rgba(44, 62, 80, 0.12);
     }
 
     .stat-card-1 { background: var(--stat-gradient-1); color: white; }
     .stat-card-2 { background: var(--stat-gradient-2); color: white; }
     .stat-card-3 { background: var(--stat-gradient-3); color: white; }
-    .stat-card-4 { background: var(--stat-gradient-4); color: var(--dark); }
+    .stat-card-4 { background: var(--stat-gradient-4); color: white; }
 
     .stat-icon {
         font-size: 2.2rem;
         opacity: 0.9;
         margin-bottom: 12px;
+        color: white !important;
     }
 
     .info-section {
@@ -67,7 +64,7 @@
         border-radius: 16px;
         padding: 0;
         overflow: hidden;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
     }
 
     .info-section .card-header {
@@ -83,12 +80,16 @@
         border-radius: 16px;
         border: none;
         overflow: hidden;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
     }
 
-    /* ========================================
-       STATUS BADGE - WARNA BARU (CERAH)
-       ======================================== */
+    .tip-card .card-header, .recent-card .card-header {
+        background: #2C3E50;
+        color: var(--light);
+        border-bottom: 1px solid #E9ECEF;
+        font-weight: 700;
+    }
+
     .status-badge {
         padding: 6px 16px;
         border-radius: 50px;
@@ -102,73 +103,58 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
 
-    /* Status Menunggu: Kuning Emas */
-    .status-menunggu {
-        background-color: #FFF3CD;
-        color: #856404;
-        border-color: #FFE69C;
-    }
-
-    /* Status Proses: Biru Langit */
-    .status-proses {
-        background-color: #B3E5FC;
-        color: #0277BD;
-        border-color: #81D4FA;
-    }
-
-    /* Status Selesai: Hijau Mint */
-    .status-selesai {
-        background-color: #C8E6C9;
-        color: #2E7D32;
-        border-color: #A5D6A7;
-    }
+    .status-menunggu { background-color: #FFF3CD; color: #856404; border-color: #FFE69C; }
+    .status-proses { background-color: #B3E5FC; color: #0277BD; border-color: #81D4FA; }
+    .status-selesai { background-color: #C8E6C9; color: #2E7D32; border-color: #A5D6A7; }
 
     .user-info {
-        background: rgba(255, 255, 255, 0.8);
+        background: #f6f7f8;
         border-radius: 12px;
         padding: 16px;
         margin-bottom: 12px;
         transition: all 0.3s ease;
-        border: 1px solid rgba(93, 64, 55, 0.1);
+        border: 1px solid #E9ECEF;
     }
 
     .user-info:hover {
         background: white;
         transform: scale(1.01);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-color: rgba(93, 64, 55, 0.2);
+        box-shadow: 0 4px 12px rgba(44, 62, 80, 0.08);
+        border-color: var(--secondary);
     }
 
-    /* Tabel desain coklat */
     .table-responsive {
         border-radius: 12px;
         overflow: hidden;
-        border: 1px solid rgba(93, 64, 55, 0.05);
+        border: 1px solid rgba(44, 62, 80, 0.05);
     }
 
     .table thead {
-        background: var(--primary);
-        color: white;
+        background: #F8F9FA;
+        color: var(--muted);
+        border-bottom: 2px solid #E9ECEF;
     }
 
     .table th {
-        font-weight: 600;
+        font-weight: 700;
         padding: 12px 10px;
         font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         font-family: 'Poppins', sans-serif;
+        border: none;
     }
 
     .table td {
         padding: 12px 10px;
-        border-top: 1px solid rgba(93, 64, 55, 0.08);
+        border-top: 1px solid #F0F0F0;
         font-size: 0.85rem;
         font-family: 'Poppins', sans-serif;
+        color: var(--dark);
     }
 
     .table-hover tbody tr:hover {
-        background: rgba(93, 64, 55, 0.02);
+        background: #F4F6F7;
     }
 
     .empty-state {
@@ -178,7 +164,7 @@
 
     .empty-icon {
         font-size: 3.5rem;
-        color: var(--muted);
+        color: var(--accent);
         margin-bottom: 15px;
     }
 
@@ -199,7 +185,7 @@
 
     .stat-label {
         font-size: 0.85rem;
-        opacity: 0.8;
+        opacity: 0.9;
         margin-bottom: 8px;
         font-family: 'Poppins', sans-serif;
         font-weight: 500;
@@ -218,11 +204,19 @@
     .alert {
         font-family: 'Poppins', sans-serif;
         border: none;
-        border-left: 4px solid var(--primary);
+        border-left: 4px solid var(--secondary);
+        background: #EBF5FB;
+        color: var(--dark);
+    }
+
+    .alert-heading {
+        color: var(--primary);
+        font-weight: 700;
     }
 
     .alert-light {
-        background: rgba(255, 255, 255, 0.8);
+        background: #EBF5FB;
+        color: var(--dark);
     }
 
     @media (max-width: 768px) {
@@ -288,19 +282,19 @@
                     <div class="col-md-4">
                         <div class="user-info">
                             <small class="text-muted fw-bold">NIS</small>
-                            <h6 class="mb-0 mt-1">{{ auth()->guard('siswa')->user()->nis }}</h6>
+                            <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->nis }}</h6>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="user-info">
                             <small class="text-muted fw-bold">Nama Lengkap</small>
-                            <h6 class="mb-0 mt-1">{{ auth()->guard('siswa')->user()->name }}</h6>
+                            <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->name }}</h6>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="user-info">
                             <small class="text-muted fw-bold">Kelas</small>
-                            <h6 class="mb-0 mt-1">{{ auth()->guard('siswa')->user()->kelas }}</h6>
+                            <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->kelas }}</h6>
                         </div>
                     </div>
                 </div>
@@ -313,17 +307,19 @@
     <div class="col-md-6 mb-4">
         <div class="modern-card tip-card">
             <div class="card-header p-3">
-                <h6 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Panduan Penggunaan</h6>
+                <h6 class="mb-0"><i class="fas fa-lightbulb me-2" style="color: var(--light);"></i>Panduan Penggunaan</h6>
             </div>
             <div class="card-body p-4">
                 <div class="alert alert-light border-0 mb-0">
-                    <h6 class="alert-heading mb-3"><i class="fas fa-info-circle me-2"></i>Petunjuk untuk Siswa:</h6>
-                    <ul class="mb-0" style="line-height: 1.7; padding-left: 20px;">
-                        <li><strong>Ajukan pengaduan Anda</strong> melalui menu "Pengaduan Saya" dan klik tombol "Ajukan Pengaduan"</li>
-                        <li><strong>Pantau riwayat pengaduan</strong> untuk melihat semua laporan sebelumnya</li>
-                        <li><strong>Cek status real-time</strong> melalui menu "Progres Pengaduan"</li>
-                        <li><strong>Hubungi admin</strong> jika membutuhkan bantuan lebih lanjut</li>
-                    </ul>
+                   <h6 class="alert-heading mb-3">
+                    <i class="fas fa-info-circle me-2"></i>Petunjuk untuk Siswa:
+                </h6>
+                <ul class="mb-0" style="line-height: 1.7; padding-left: 20px;">
+                    <li>Ajukan pengaduan melalui menu <strong>"Pengaduan Saya"</strong>, lalu klik tombol <strong>"Ajukan Pengaduan"</strong>.</li>
+                    <li>Klik <strong>ikon mata</strong> pada kolom aksi di menu <strong>"Pengaduan Saya"</strong> untuk melihat detail pengaduan dan status secara real-time.</li>
+                    <li>Jika ingin memperbarui pengaduan, klik <strong>ikon pensil</strong> pada kolom aksi di menu <strong>"Pengaduan Saya"</strong>.</li>
+                    <li>Klik <strong>ikon sampah</strong> pada kolom aksi di menu <strong>"Pengaduan Saya"</strong> untuk menghapus pengaduan.</li>
+                </ul>
                 </div>
             </div>
         </div>
@@ -332,7 +328,7 @@
     <div class="col-md-6 mb-4">
         <div class="modern-card recent-card">
             <div class="card-header p-3">
-                <h6 class="mb-0"><i class="fas fa-history me-2"></i>Pengaduan Terbaru</h6>
+                <h6 class="mb-0"><i class="fas fa-history me-2" style="color: var(--light);"></i>Pengaduan Terbaru</h6>
             </div>
             <div class="card-body p-4">
                 @php
@@ -357,7 +353,7 @@
                             <tbody>
                                 @foreach($latest as $item)
                                 <tr>
-                                    <td>{{ $item->id_aspirasi }}</td>
+                                    <td style="font-weight: 600;">{{ $item->id_aspirasi }}</td>
                                     <td>{{ $item->kategori->ket_kategori ?? 'Tidak diketahui' }}</td>
                                     <td>{{ $item->created_at->format('d M Y') }}</td>
                                     <td>
@@ -376,8 +372,8 @@
                 @else
                     <div class="empty-state">
                         <i class="fas fa-inbox empty-icon"></i>
-                        <h5 class="text-muted mb-2">Belum Ada Pengaduan</h5>
-                        <p class="text-muted mb-3">Anda belum pernah mengajukan pengaduan sarana sekolah</p>
+                        <h5 class="text-muted mb-2" style="color: var(--primary); font-weight: 600;">Belum Ada Pengaduan</h5>
+                        <p class="text-muted mb-3" style="color: var(--dark);">Anda belum pernah mengajukan pengaduan sarana sekolah</p>
                     </div>
                 @endif
             </div>

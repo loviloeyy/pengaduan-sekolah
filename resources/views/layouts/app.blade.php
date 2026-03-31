@@ -4,54 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Aplikasi Pengaduan Sarana Sekolah')</title>
-    <!-- Perbaikan: Hapus spasi di akhir URL -->
+
+    <!-- CSS Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* Font Poppins */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-        /* Palet warna Coklat Eksklusif */
         :root {
-            --primary: #5D4037;      /* Coklat tua (kayu jati) */
-            --secondary: #795548;     /* Coklat sedang */
-            --accent: #8D6E63;        /* Coklat muda */
-            --light: #F5F1EB;         /* Beige terang */
-            --dark: #3E2723;          /* Dark brown */
-            --muted: #BCAAA4;         /* Coklat abu-abu */
-
-            /* Gradient coklat */
-            --sidebar-gradient: linear-gradient(180deg, #5D4037, #5D4037);
-            --header-gradient: linear-gradient(135deg, #3E2723, #3E2723);
-            --card-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #95A5A6;
+            --light: #ECF0F1;
+            --dark: #2C3E50;
+            --muted: #7F8C8D;
+            --sidebar-gradient: linear-gradient(180deg, #2C3E50, #34495E);
+            --header-gradient: linear-gradient(135deg, #2C3E50, #34495E);
+            --card-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
         }
 
         body {
             background-color: var(--light);
             font-family: 'Poppins', sans-serif;
             color: var(--dark);
-            font-weight: 400;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
         }
 
         .sidebar {
             background: var(--sidebar-gradient);
             min-height: 100vh;
             position: fixed;
+            top: 0;
+            left: 0;
             width: 260px;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+            overflow-y: auto;
         }
 
-        /* Perubahan Utama: Header Sidebar dengan Icon Sekolah Modern */
         .sidebar-header {
             padding: 25px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.15);
-            position: relative;
         }
 
         .school-icon-container {
@@ -67,23 +63,8 @@
             color: white;
         }
 
-        .school-icon-container i {
-            font-size: 2.5rem;
-        }
-
-        .sidebar-header h4 {
-            color: white;
-            margin-bottom: 8px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            font-size: 1.3rem;
-            position: relative;
-        }
-
-        .sidebar-header small {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
-        }
+        .sidebar-header h4 { color: white; margin-bottom: 8px; font-weight: 600; font-size: 1.3rem; }
+        .sidebar-header small { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
 
         .nav-link {
             color: rgba(255,255,255,0.9);
@@ -103,19 +84,43 @@
             transform: translateX(5px);
         }
 
-        .nav-link i {
-            width: 28px;
-            text-align: center;
-            margin-right: 12px;
-            font-size: 18px;
-        }
+        .nav-link i { width: 28px; text-align: center; margin-right: 12px; font-size: 18px; }
 
         .main-content {
             margin-left: 260px;
             padding: 20px;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 100vh;
+            width: 100%;
         }
+
+        .sidebar-toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.active { display: block; }
 
         .navbar {
             background: white;
@@ -132,13 +137,9 @@
             border: none;
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden;
-            border: 1px solid rgba(93, 64, 55, 0.05);
+            border: 1px solid rgba(44, 62, 80, 0.05);
         }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 6px 25px rgba(93, 64, 55, 0.25);
-        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 6px 25px rgba(44, 62, 80, 0.12); }
 
         .card-header {
             background: var(--header-gradient);
@@ -152,137 +153,50 @@
             font-size: 1.1rem;
         }
 
-        .stat-card {
-            background: white;
-            border-left: 4px solid var(--primary);
-            transition: all 0.3s;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(93, 64, 55, 0.05);
-        }
-
-        .stat-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(93, 64, 55, 0.2);
-        }
-
-        .stat-icon {
-            font-size: 2.8rem;
-            opacity: 0.7;
-        }
-
-        .status-badge {
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: inline-block;
-            border: 1px solid rgba(0,0,0,0.1);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .status-menunggu {
-            background-color: #f5f1eb;
-            color: #5d4037;
-            border-color: #8d6e63;
-        }
-
-        .status-proses {
-            background-color: #f5f1eb;
-            color: #795548;
-            border-color: #8d6e63;
-        }
-
-        .status-selesai {
-            background-color: #f5f1eb;
-            color: #5d4037;
-            border-color: #8d6e63;
-        }
-
-        /* Modern Icons */
-        .modern-icon {
-            font-size: 1.6rem;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover .modern-icon {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .btn-modern {
-            background: var(--primary);
-            border: none;
-            border-radius: 8px;
-            padding: 8px 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(93, 64, 55, 0.25);
-            color: white;
-            font-size: 0.9rem;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-modern:hover {
-            background: #4E342E;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(93, 64, 55, 0.3);
-        }
-
-        /* Responsif */
         @media (max-width: 992px) {
-            .sidebar {
-                width: 230px;
-            }
-            .main-content {
-                margin-left: 230px;
-            }
+            .sidebar { width: 230px; }
+            .main-content { margin-left: 230px; }
         }
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 70px;
-            }
-            .sidebar .nav-text, .sidebar-header h4, .sidebar-header small {
-                display: none;
-            }
-            .main-content {
-                margin-left: 70px;
+                transform: translateX(-100%);
+                width: 260px;
+                box-shadow: none;
             }
 
-            .card-header {
-                padding: 15px 20px;
-                font-size: 1rem;
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: 5px 0 25px rgba(0,0,0,0.3);
             }
-        }
 
-        @media (max-width: 576px) {
-            .sidebar {
-                width: 0;
-                opacity: 0;
-            }
             .main-content {
                 margin-left: 0;
+                padding: 60px 20px 20px;
+                width: 100%;
+            }
+
+            .sidebar-toggle-btn {
+                display: flex;
+            }
+
+            .sidebar-header h4,
+            .sidebar-header small,
+            .nav-text {
+                display: block;
             }
         }
-
-
-
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <div class="sidebar" id="mainSidebar">
         <div class="sidebar-header">
-            <!-- Perubahan: Ganti teks dengan icon sekolah modern di tengah -->
             <div class="school-icon-container">
                 <i class="fas fa-school"></i>
             </div>
@@ -291,7 +205,8 @@
                 <h4>ADMIN PANEL</h4>
                 <small>Pengaduan Sekolah</small>
             @elseif(auth()->guard('siswa')->check())
-                <h4>PENGADUAN SEKOLAH</h4>
+                <h4>SISWA</h4>
+                <small>Pengaduan Sekolah</small>
             @else
                 <h4>APLIKASI</h4>
                 <small>Pengaduan Sekolah</small>
@@ -299,7 +214,7 @@
         </div>
 
         <ul class="nav flex-column mt-4 px-3">
-            <!-- Menu Admin - HANYA untuk admin -->
+            <!-- Menu Admin -->
             @if(auth()->guard('admin')->check())
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -308,23 +223,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.aspirasi.index') }}" class="nav-link {{ request()->routeIs('admin.aspirasi.index') || request()->routeIs('admin.aspirasi.filter') ? 'active' : '' }}">
+                    <a href="{{ route('admin.aspirasi.index') }}" class="nav-link {{ request()->routeIs('admin.aspirasi.*') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list"></i>
                         <span class="nav-text">Daftar Pengaduan</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="{{ route('admin.aspirasi.riwayat') }}" class="nav-link {{ request()->routeIs('admin.aspirasi.riwayat') ? 'active' : '' }}">
-                        <i class="fas fa-history"></i>
-                        <span class="nav-text">Riwayat Pengaduan</span>
+                <li class="nav-item">
+                    <a href="{{ route('admin.siswa.index') }}" class="nav-link {{ request()->routeIs('admin.siswa.*') ? 'active' : '' }}">
+                      <i class="fas fa-user-graduate"></i>
+                        <span class="nav-text">Daftar Siswa</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.aspirasi.ringkasan') }}" class="nav-link {{ request()->routeIs('admin.aspirasi.ringkasan') ? 'active' : '' }}">
-                        <i class="fas fa-chart-bar"></i>
-                        <span class="nav-text">Laporan</span>
-                    </a>
-                </li> --}}
                 <li class="nav-item mt-auto mb-3">
                     <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
                         @csrf
@@ -336,7 +245,7 @@
                 </li>
             @endif
 
-            <!-- Menu Siswa - HANYA untuk siswa -->
+            <!-- Menu Siswa -->
             @if(auth()->guard('siswa')->check())
                 <li class="nav-item">
                     <a href="{{ route('siswa.dashboard') }}" class="nav-link {{ request()->routeIs('siswa.dashboard') ? 'active' : '' }}">
@@ -345,23 +254,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('siswa.aspirasi.index') }}" class="nav-link {{ request()->routeIs('siswa.aspirasi.index') ? 'active' : '' }}">
+                    <a href="{{ route('siswa.aspirasi.index') }}" class="nav-link {{ request()->routeIs('siswa.aspirasi.*') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list"></i>
                         <span class="nav-text">Pengaduan Saya</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="{{ route('siswa.aspirasi.riwayat') }}" class="nav-link {{ request()->routeIs('siswa.aspirasi.riwayat') ? 'active' : '' }}">
-                        <i class="fas fa-history"></i>
-                        <span class="nav-text">Riwayat Pengaduan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('siswa.aspirasi.ringkasan') }}" class="nav-link {{ request()->routeIs('siswa.aspirasi.ringkasan') ? 'active' : '' }}">
-                        <i class="fas fa-chart-line"></i>
-                        <span class="nav-text">Progres Pengaduan</span>
-                    </a>
-                </li> --}}
                 <li class="nav-item mt-auto mb-3">
                     <form method="POST" action="{{ route('siswa.logout') }}" class="d-inline">
                         @csrf
@@ -381,7 +278,7 @@
             <div class="container-fluid">
                 <h4 class="mb-0 fw-bold">@yield('title', 'Dashboard')</h4>
                 <div class="d-flex align-items-center">
-                    <div class="me-3">
+                    <div class="me-3 d-none d-md-block">
                         <i class="far fa-clock me-2"></i>
                         <span id="currentTime"></span>
                     </div>
@@ -422,14 +319,14 @@
 
         <div class="container-fluid">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3" role="alert">
                     <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 rounded-3" role="alert">
                     <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
@@ -441,7 +338,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Update waktu real-time
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+
+                if (window.innerWidth <= 768) {
+                    document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : 'auto';
+                }
+            }
+        }
+
         function updateTime() {
             const now = new Date();
             const options = {
@@ -452,7 +362,10 @@
                 hour: '2-digit',
                 minute: '2-digit'
             };
-            document.getElementById('currentTime').textContent = now.toLocaleDateString('id-ID', options);
+            const timeElement = document.getElementById('currentTime');
+            if(timeElement) {
+                timeElement.textContent = now.toLocaleDateString('id-ID', options);
+            }
         }
         setInterval(updateTime, 1000);
         updateTime();

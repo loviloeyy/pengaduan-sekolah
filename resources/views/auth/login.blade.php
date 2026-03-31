@@ -7,17 +7,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Palet warna Earth Tone */
+
         :root {
-            --primary: #5D4037;      /* Coklat tua (kayu jati) */
-            --secondary: #795548;     /* Coklat sedang */
-            --accent: #8D6E63;        /* Coklat muda */
-            --light: #F5F1EB;         /* Beige terang */
-            --dark: #3E2723;          /* Dark brown */
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #95A5A6;
+            --light: #ECF0F1;
+            --dark: #2C3E50;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
         body {
-            background: linear-gradient(135deg, var(--light), #f8f4f0);
+            background: linear-gradient(135deg, var(--light), #dfe6e9);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -28,14 +30,15 @@
         .login-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(93, 64, 55, 0.2);
+            box-shadow: 0 10px 40px rgba(44, 62, 80, 0.15);
             overflow: hidden;
             max-width: 450px;
             width: 100%;
+            border: 1px solid rgba(44, 62, 80, 0.05);
         }
 
         .login-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), #34495E);
             color: white;
             padding: 30px;
             text-align: center;
@@ -54,12 +57,12 @@
         }
 
         .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(93, 64, 55, 0.25);
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
         }
 
         .btn-login {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--secondary), #2980B9);
             border: none;
             border-radius: 10px;
             padding: 12px;
@@ -67,11 +70,13 @@
             transition: all 0.3s;
             color: white;
             font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
 
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(93, 64, 55, 0.4);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(135deg, #2980B9, var(--secondary));
         }
 
         .role-btn {
@@ -85,34 +90,54 @@
             color: var(--primary);
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .role-btn:hover, .role-btn.active {
+        .role-btn:hover {
+            background: #EBF5FB;
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .role-btn.active {
             background: var(--primary);
             color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
     <div class="login-card">
         <div class="login-header">
-            <h2><i class="fas fa-school me-2"></i>Pengaduan Sarana Sekolah</h2>
+            <h2><i class="fas fa-school me-2"></i>Pengaduan Sekolah</h2>
             <p class="mb-0">Silahkan login untuk melanjutkan</p>
         </div>
 
         <div class="login-body">
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
+                    <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
+                    <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
