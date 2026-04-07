@@ -281,19 +281,19 @@
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="user-info">
-                            <small class="text-muted fw-bold">NIS</small>
+                            <small class="text-dark fw-bold">NIS</small>
                             <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->nis }}</h6>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="user-info">
-                            <small class="text-muted fw-bold">Nama Lengkap</small>
+                            <small class="text-dark fw-bold">Nama Lengkap</small>
                             <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->name }}</h6>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="user-info">
-                            <small class="text-muted fw-bold">Kelas</small>
+                            <small class="text-dark fw-bold">Kelas</small>
                             <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->kelas }}</h6>
                         </div>
                     </div>

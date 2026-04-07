@@ -6,17 +6,19 @@
     <title>Login - Pengaduan Sarana Sekolah</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
 
+    <!-- Import Font Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
         :root {
+            /* Kita pakai warna asli kamu tapi font diganti Poppins */
             --primary: #2C3E50;
             --secondary: #3498DB;
-            --accent: #95A5A6;
             --light: #ECF0F1;
-            --dark: #2C3E50;
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
         body {
             background: linear-gradient(135deg, var(--light), #dfe6e9);
@@ -24,6 +26,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* FONT UTAMA DIUBAH KE POPPINS */
             font-family: 'Poppins', sans-serif;
         }
 
@@ -44,6 +47,11 @@
             text-align: center;
         }
 
+        /* Pastikan judul juga pakai Poppins */
+        .login-header h1, .login-header h4, .login-header p {
+            font-family: 'Poppins', sans-serif;
+        }
+
         .login-body {
             padding: 40px;
         }
@@ -53,6 +61,7 @@
             padding: 12px 15px;
             border: 2px solid #e9ecef;
             transition: all 0.3s;
+            /* Input text pakai Poppins */
             font-family: 'Poppins', sans-serif;
         }
 
@@ -69,6 +78,7 @@
             font-weight: 600;
             transition: all 0.3s;
             color: white;
+            /* Tombol pakai Poppins */
             font-family: 'Poppins', sans-serif;
             box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
@@ -89,6 +99,7 @@
             background: white;
             color: var(--primary);
             font-weight: 600;
+            /* Tombol Role pakai Poppins */
             font-family: 'Poppins', sans-serif;
             display: flex;
             align-items: center;
@@ -112,18 +123,25 @@
             background-color: #d4edda;
             border-color: #c3e6cb;
             color: #155724;
+            font-family: 'Poppins', sans-serif;
         }
         .alert-danger {
             background-color: #f8d7da;
             border-color: #f5c6cb;
             color: #721c24;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .text-muted, .form-label {
+            font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
 <body>
     <div class="login-card">
         <div class="login-header">
-            <h2><i class="fas fa-school me-2"></i>Pengaduan Sekolah</h2>
+            <h1><i class="fas fa-school me-2"></i></h1>
+            <h4>Pengaduan Sekolah</h4>
             <p class="mb-0">Silahkan login untuk melanjutkan</p>
         </div>
 
@@ -145,6 +163,7 @@
             <form method="POST" action="{{ route('login.submit') }}">
                 @csrf
 
+                <!-- PILIHAN ROLE (TETAP ADA) -->
                 <div class="mb-4">
                     <label class="form-label fw-bold">Pilih Role</label>
                     <div class="role-container">
@@ -158,6 +177,7 @@
                     <input type="hidden" name="role" id="roleInput" value="admin">
                 </div>
 
+                <!-- INPUT USERNAME/NIS (TETAP ADA) -->
                 <div class="mb-3">
                     <label for="username" class="form-label fw-bold">
                         <span id="labelText">Username</span>

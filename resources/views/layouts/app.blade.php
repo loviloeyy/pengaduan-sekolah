@@ -28,9 +28,10 @@
             background-color: var(--light);
             font-family: 'Poppins', sans-serif;
             color: var(--dark);
-            overflow-x: hidden; /* Mencegah scroll horizontal */
+            overflow-x: hidden;
         }
 
+        /* PENTING: Tambahkan display flex column agar mt-auto bekerja */
         .sidebar {
             background: var(--sidebar-gradient);
             min-height: 100vh;
@@ -42,12 +43,15 @@
             z-index: 1000;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
             overflow-y: auto;
+            display: flex;           /* Ditambahkan */
+            flex-direction: column;  /* Ditambahkan */
         }
 
         .sidebar-header {
             padding: 25px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.15);
+            flex-shrink: 0; /* Mencegah header mengecil */
         }
 
         .school-icon-container {
@@ -87,8 +91,8 @@
         .nav-link i { width: 28px; text-align: center; margin-right: 12px; font-size: 18px; }
 
         .main-content {
-            margin-left: 260px;
             padding: 20px;
+            padding-left: 280px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 100vh;
             width: 100%;
@@ -155,7 +159,7 @@
 
         @media (max-width: 992px) {
             .sidebar { width: 230px; }
-            .main-content { margin-left: 230px; }
+            .main-content { padding-left: 250px; }
         }
 
         @media (max-width: 768px) {
@@ -171,8 +175,8 @@
             }
 
             .main-content {
-                margin-left: 0;
                 padding: 60px 20px 20px;
+                padding-left: 20px;
                 width: 100%;
             }
 
@@ -213,7 +217,9 @@
             @endif
         </div>
 
-        <ul class="nav flex-column mt-4 px-3">
+        <!-- PERUBAHAN 1: Tambahkan class 'flex-grow-1' di sini -->
+        <ul class="nav flex-column mt-4 px-3 flex-grow-1">
+
             <!-- Menu Admin -->
             @if(auth()->guard('admin')->check())
                 <li class="nav-item">
@@ -234,12 +240,14 @@
                         <span class="nav-text">Daftar Siswa</span>
                     </a>
                 </li>
+
+                <!-- PERUBAHAN 2: Form dan Button diberi class w-100 agar lebar penuh -->
                 <li class="nav-item mt-auto mb-3">
-                    <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
+                    <form method="POST" action="{{ route('admin.logout') }}" class="d-inline w-100">
                         @csrf
-                        <button type="submit" class="nav-link text-danger bg-transparent border-0 p-0">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span class="nav-text">Logout</span>
+                       <button class="nav-link logout-btn">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
                         </button>
                     </form>
                 </li>
@@ -259,13 +267,16 @@
                         <span class="nav-text">Pengaduan Saya</span>
                     </a>
                 </li>
+
+                <!-- PERUBAHAN 2: Form dan Button diberi class w-100 agar lebar penuh -->
                 <li class="nav-item mt-auto mb-3">
-                    <form method="POST" action="{{ route('siswa.logout') }}" class="d-inline">
+                    <form method="POST" action="{{ route('siswa.logout') }}" class="d-inline w-100">
                         @csrf
-                        <button type="submit" class="nav-link text-danger bg-transparent border-0 p-0">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span class="nav-text">Logout</span>
+                        <button class="nav-link logout-btn">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
                         </button>
+
                     </form>
                 </li>
             @endif

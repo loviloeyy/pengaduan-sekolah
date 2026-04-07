@@ -3,320 +3,413 @@
 @section('title', 'Detail Pengaduan')
 
 @section('content')
-    <style>
-        /* Palet warna Earth Tone */
-        :root {
-            --primary: #5D4037;
-            /* Coklat tua (kayu jati) */
-            --secondary: #795548;
-            /* Coklat sedang */
-            --accent: #8D6E63;
-            /* Coklat muda */
-            --light: #F5F1EB;
-            /* Beige terang */
-            --dark: #3E2723;
-            /* Dark brown */
+<style>
+    :root {
+        --primary: #2C3E50;
+        --secondary: #3498DB;
+        --accent: #95A5A6;
+        --light: #ECF0F1;
+        --dark: #2C3E50;
+        --muted: #7F8C8D;
+        --border-color: #E9ECEF;
+    }
 
-            /* Gradient earth tone */
-            --card-gradient: linear-gradient(135deg, #ffffff, #ffffff);
-            --header-gradient: linear-gradient(135deg, #3E2723, #3E2723);
-        }
+    .detail-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
+        overflow: hidden;
+        border: 1px solid rgba(44, 62, 80, 0.05);
+        margin-bottom: 20px;
+    }
 
-        .earth-card {
-            background: var(--card-gradient);
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
-            overflow: hidden;
-            border: 1px solid rgba(93, 64, 55, 0.05);
-        }
+    .card-header-unified {
+        background: linear-gradient(135deg, var(--primary), #34495E);
+        color: white;
+        padding: 20px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .earth-card-header {
-            background: var(--header-gradient);
-            color: white;
-            border-radius: 16px 16px 0 0 !important;
-            padding: 20px 24px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 1.2rem;
-        }
+    .card-header-unified h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .pengaduan-card {
-            border: 1px solid rgba(93, 64, 55, 0.1);
-            border-radius: 12px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-        }
+    .btn-back {
+        background: white;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
 
-        .pengaduan-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15);
-        }
+    .btn-back:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateX(-3px);
+    }
 
-        .foto-pengaduan {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border: 1px solid rgba(93, 64, 55, 0.1);
-        }
+    .card-body-custom {
+        padding: 30px;
+    }
 
-        .status-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: inline-block;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
+    .info-box {
+        background: #F8F9FA;
+        border-radius: 10px;
+        padding: 15px;
+        height: 100%;
+        border: 1px solid var(--border-color);
+        transition: all 0.2s;
+    }
 
-        .status-menunggu {
-            background-color: #FFF9C4;
-            color: #F57F17;
-            border-color: #F57F17;
-        }
+    .info-box:hover {
+        background: #fff;
+        border-color: var(--secondary);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
 
-        .status-proses {
-            background-color: #B3E5FC;
-            color: #0277BD;
-            border-color: #81D4FA;
-        }
+    .info-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--dark);
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
 
-        .status-selesai {
-            background-color: #C8E6C9;
-            color: #2E7D32;
-            border-color: #A5D6A7;
-        }
+    .info-value {
+        font-size: 0.95rem;
+        color: var(--dark);
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.4;
+    }
 
-        /* Warna kategori earth tone */
-        .kategori-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: inline-block;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            background-color: #f5f1eb;
-            color: #5d4037;
-            border-color: #8d6e63;
-        }
+    .status-badge {
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        display: inline-block;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .status-menunggu { background-color: #FFF3CD; color: #856404; }
+    .status-proses { background-color: #B3E5FC; color: #0277BD; }
+    .status-selesai { background-color: #C8E6C9; color: #2E7D32; }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-        }
+    .kategori-badge {
+        background-color: #EBF5FB;
+        color: var(--primary);
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        border: 1px solid #D6EAF8;
+    }
 
-        .empty-icon {
-            font-size: 3.5rem;
-            color: #BCAAA4;
-            margin-bottom: 15px;
-        }
+    .section-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 2px solid #F0F0F0;
+        padding-bottom: 10px;
+    }
 
-        .pagination .page-link {
-            color: var(--primary);
-            border: 1px solid rgba(93, 64, 55, 0.2);
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin: 0 4px;
-        }
+    .content-text {
+        color: var(--dark);
+        line-height: 1.6;
+        font-size: 0.95rem;
+        white-space: pre-wrap;
+    }
 
-        .pagination .page-item.active .page-link {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
+    .foto-container {
+        text-align: left;
+        background: transparent;
+        padding: 0;
+        border-radius: 12px;
+        border: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 
-        .pagination .page-link:hover {
-            background-color: rgba(93, 64, 55, 0.1);
-        }
+    .foto-pengaduan {
+        max-width: 100%;
+        width: auto;
+        max-height: 300px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        display: block;
+    }
 
-        /* Timeline Styles */
-        .history-timeline {
-            position: relative;
-            padding: 10px 0 10px 30px;
-        }
+    .feedback-box {
+        background: #EBF5FB;
+        border-left: 4px solid var(--secondary);
+        padding: 20px;
+        border-radius: 8px;
+        color: var(--dark);
+        font-style: italic;
+        position: relative;
+    }
 
-        .history-timeline::before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--primary), var(--accent));
-            border-radius: 3px;
-        }
+    .feedback-box::before {
+        content: '\f075';
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 2rem;
+        color: rgba(52, 152, 219, 0.1);
+    }
 
-        .history-item {
-            position: relative;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background: var(--light);
-            border-radius: 10px;
-            border: 1px solid rgba(93, 64, 55, 0.08);
-            transition: all 0.2s ease;
-        }
+    .history-timeline {
+        position: relative;
+        padding: 10px 0;
+    }
 
-        .history-item:hover {
-            transform: translateX(4px);
-            box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1);
-        }
+    .history-timeline::before {
+        content: '';
+        position: absolute;
+        left: 18px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--secondary), var(--dark));
+        border-radius: 3px;
+    }
 
-        .history-item::before {
-            content: '';
-            position: absolute;
-            left: -26px;
-            top: 16px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px var(--primary);
-            z-index: 1;
-        }
+    .history-item {
+        position: relative;
+        padding: 12px 15px 12px 50px;
+        margin-bottom: 8px;
+        background: #F4F6F7;
+        border-radius: 10px;
+        border: 1px solid rgba(44, 62, 80, 0.08);
+        transition: all 0.2s ease;
+    }
 
-        .history-status-badge {
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            display: inline-block;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
+    .history-item:hover {
+        transform: translateX(4px);
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+    }
 
-        .history-feedback-text {
-            font-size: 0.85rem;
-            color: #555;
-            margin-top: 5px;
-        }
+    .history-item::before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        top: 18px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--secondary);
+        border: 3px solid white;
+        box-shadow: 0 0 0 2px var(--secondary);
+        z-index: 1;
+    }
 
-        .history-date {
-            font-size: 0.75rem;
-            color: var(--accent);
-            margin-top: 4px;
-        }
+    .history-item.selesai::before {
+        background: var(--secondary);
+        box-shadow: 0 0 0 2px var(--secondary);
+        border-color: white;
+    }
 
-        .no-history {
-            text-align: center;
-            padding: 20px;
-            color: var(--accent);
-            font-style: italic;
-        }
-    </style>
+    .history-status {
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="earth-card-header">
-                <span>Detail Aspirasi</span>
-                <a href="{{ route('siswa.aspirasi.index') }}" class="btn btn-sm btn-light">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
+    .history-feedback {
+        font-size: 0.85rem;
+        color: #555;
+        margin-bottom: 4px;
+        border-top: 1px solid #eee;
+        padding-top: 8px;
+        margin-top: 8px;
+    }
+
+    .history-meta {
+        font-size: 0.75rem;
+        color: var(--dark);
+        margin-top: 5px;
+        display: block;
+    }
+
+    .no-history {
+        text-align: center;
+        padding: 20px;
+        color: var(--dark);
+        font-style: italic;
+    }
+
+    .bottom-action-area {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-color);
+        text-align: right;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-10 offset-lg-1">
+        <div class="detail-card">
+            <div class="card-header-unified">
+                <h4><i class="fas fa-file-alt"></i> Detail Pengaduan</h4>
             </div>
 
-            <div class="pengaduan-card p-4">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <h6 class="text-muted mb-2">ID Aspirasi</h6>
-                        <p class="fw-bold">{{ $aspirasi->id_aspirasi }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="text-muted mb-2">Kategori</h6>
-                        <span class="kategori-badge">{{ $aspirasi->kategori->ket_kategori }}</span>
+            <div class="card-body-custom">
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3 col-sm-6">
+                    <div class="info-box">
+                        <div class="info-label">ID Pengaduan</div>
+                        <div class="info-value">{{ $aspirasi->id_aspirasi }}</div>
                     </div>
                 </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <h6 class="text-muted mb-2">NIS</h6>
-                        <p class="fw-bold">{{ $aspirasi->nis }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="text-muted mb-2">Status</h6>
-                        <span class="status-badge status-{{ strtolower($aspirasi->status) }}">{{ $aspirasi->status }}</span>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <h6 class="text-muted mb-2">Lokasi</h6>
-                        <p>{{ $aspirasi->lokasi ?? '-' }}</p>
-                    </div>
-                    <div class="col-md-6">
-                    <h6 class="text-muted mb-2">Tanggal Dibuat</h6>
-                    <p>
-                        {{ \Carbon\Carbon::parse($aspirasi->created_at)
-                            ->setTimezone('Asia/Jakarta')
-                            ->locale('id_ID')
-                            ->isoFormat('D MMMM Y HH:mm') }}
-                    </p>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <h6 class="text-muted mb-2">Deskripsi</h6>
-                        <p>{{ $aspirasi->ket }}</p>
-                    </div>
-                </div>
-
-                @if ($aspirasi->foto)
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <h6 class="text-muted mb-2">Foto</h6>
-                            <img src="{{ asset('storage/pengaduan/' . $aspirasi->foto) }}" alt="Foto Aspirasi" class="foto-pengaduan">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="info-box">
+                            <div class="info-label">Kategori</div>
+                            <span class="kategori-badge">{{ $aspirasi->kategori->ket_kategori }}</span>
                         </div>
                     </div>
-                @endif
-
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <h6 class="text-muted mb-2">Feedback</h6>
-                        <p>{{ $aspirasi->feedback ?? 'Belum ada feedback' }}</p>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="info-box">
+                            <div class="info-label">Tanggal</div>
+                            <div class="info-value" style="font-size: 0.85rem;">
+                                {{ \Carbon\Carbon::parse($aspirasi->created_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="info-box">
+                            <div class="info-label">Status Saat Ini</div>
+                            <span class="status-badge status-{{ strtolower($aspirasi->status) }}">
+                                {{ $aspirasi->status }}
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                {{-- Riwayat Perubahan Status --}}
-                <div class="row">
-                    <div class="col-12">
-                        <h6 class="text-muted mb-3"><i class="fas fa-clock-rotate-left me-1"></i>Riwayat Perubahan Status</h6>
-                        @if($aspirasi->histories && $aspirasi->histories->count() > 0)
-                            <div class="history-timeline">
-                                @foreach($aspirasi->histories as $history)
-                                    <div class="history-item">
-                                        <div>
-                                            <span class="history-status-badge
-                                                @if($history->status == 'Menunggu') status-menunggu
-                                                @elseif($history->status == 'Proses') status-proses
-                                                @else status-selesai @endif">
-                                                {{ $history->status }}
-                                            </span>
-                                        </div>
-                                        @if($history->feedback)
-                                            <div class="history-feedback-text">
-                                                <i class="fas fa-comment-dots me-1"></i>{{ $history->feedback }}
-                                            </div>
-                                        @endif
-                                        <div class="history-date">
-                                        <i class="fas fa-clock me-1"></i>
-                                        {{ \Carbon\Carbon::parse($history->created_at)
-                                            ->setTimezone('Asia/Jakarta')
-                                            ->locale('id_ID')
-                                            ->isoFormat('D MMMM Y HH:mm') }}
-                                    </div>
-                                    </div>
-                                @endforeach
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                        <div class="info-label mb-2">Pelapor</div>
+                        <div class="p-3 bg-white border rounded-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div style="width: 40px; height: 40px; background: #EBF5FB; color: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                    {{ substr($aspirasi->siswa->name ?? 'S', 0, 1) }}
+                                </div>
+                                <div>
+
+                                    <div class="fw-bold" style="color: var(--dark);">{{ $aspirasi->siswa->name ?? '-' }}</div>
+                                    <div class="text-muted" style="font-size: 0.8rem;">{{ $aspirasi->nis }} • {{ $aspirasi->siswa->kelas ?? '-' }}</div>
+                                </div>
                             </div>
-                        @else
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-label mb-2">Lokasi</div>
+                        <div class="p-3 bg-white border rounded-3 d-flex align-items-center h-100">
+                            <i class="fas fa-map-marker-alt text-danger me-3 fa-lg"></i>
+                            <span class="fw-medium" style="color: var(--dark);">{{ $aspirasi->lokasi ?? '-' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deskripsi -->
+                <div class="mb-4 mt-4">
+                    <h6 class="fw-bold mb-2" style="color: var(--primary);">
+                        Keterangan
+                    </h6>
+                    <div class="col-md-8">
+                        <div style="background-color: #f8f9fa; border-radius: 0.5rem; padding: 1rem; border: 1px solid #e9ecef; text-align: left !important; margin: 0;">
+                            {{ $aspirasi->ket }}
+                        </div>
+                    </div>
+                </div>
+
+
+                  @if ($aspirasi->foto)
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-2" style="color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                    Foto
+                    </h6>
+                    <div class="foto-container">
+                        <img src="{{ asset('storage/pengaduan/' . $aspirasi->foto) }}" alt="Foto Bukti" class="foto-pengaduan">
+                    </div>
+                </div>
+                @endif
+
+                <!-- Timeline Riwayat -->
+                <div>
+                    <div class="section-title"><i class="fas fa-history"></i> Riwayat Perubahan</div>
+
+                    <div class="history-timeline">
+                        @php
+                            $hasHistories = $aspirasi->histories && $aspirasi->histories->count() > 0;
+                        @endphp
+
+                        @if(!$hasHistories)
                             <div class="no-history">
                                 <i class="fas fa-inbox" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
                                 Belum ada riwayat perubahan status
                             </div>
+                        @else
+                            @foreach($aspirasi->histories as $history)
+                                @php
+                                    $itemClass = ($history->status == 'Selesai') ? 'history-item selesai' : 'history-item';
+                                @endphp
+
+                                <div class="{{ $itemClass }}">
+                                    <div class="history-status">
+                                        <span class="status-badge status-{{ strtolower($history->status) }}">
+                                            {{ $history->status }}
+                                        </span>
+                                    </div>
+
+                                    @if($history->feedback)
+                                        <div class="history-feedback">
+                                            <i class="fas fa-comment-dots me-1"></i>admin: {{ $history->feedback }}
+                                        </div>
+                                    @endif
+
+                                    <div class="history-meta">
+                                        <i class="fas fa-clock me-1"></i>{{ \Carbon\Carbon::parse($history->created_at)->setTimezone('Asia/Jakarta')->format('d M Y H:i') }}
+                                    </div>
+                                </div>
+                            @endforeach
                         @endif
                     </div>
+
+                    <div class="bottom-action-area">
+                        <a href="{{ route('siswa.aspirasi.index') }}" class="btn-back">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </a>
+                    </div>
+
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 @endsection

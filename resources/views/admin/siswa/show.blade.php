@@ -25,13 +25,13 @@
                     <td>{{ $siswa->kelas }}</td>
                 </tr>
                 <tr>
-                    <th>Dibuat</th>
-                    <td>{{ $siswa->created_at->format('d M Y H:i') }}</td>
-                </tr>
-                <tr>
-                    <th>Diupdate</th>
-                    <td>{{ $siswa->updated_at->format('d M Y H:i') }}</td>
-                </tr>
+    <th>Dibuat</th>
+    <td>{{ \Carbon\Carbon::parse($siswa->created_at)->setTimezone('Asia/Jakarta')->format('d M Y H:i') }}</td>
+</tr>
+<tr>
+    <th>Diupdate</th>
+    <td>{{ \Carbon\Carbon::parse($siswa->updated_at)->setTimezone('Asia/Jakarta')->format('d M Y H:i') }}</td>
+</tr>
             </table>
 
             <div class="d-flex gap-2">

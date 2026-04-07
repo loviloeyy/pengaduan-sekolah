@@ -13,7 +13,6 @@
 
         --card-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
         --header-gradient: linear-gradient(135deg, #2C3E50, #34495E);
-        --btn-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
     }
 
     .earth-card {
@@ -44,16 +43,14 @@
         padding: 8px 16px;
         font-weight: 600;
         transition: all 0.3s ease;
-        box-shadow: var(--btn-shadow);
         color: white;
         font-size: 0.9rem;
         font-family: 'Poppins', sans-serif;
     }
 
     .btn-earth:hover {
-        background: #2980B9;
+        background: #1d74ae;
         transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
         color: white;
     }
 
@@ -78,7 +75,7 @@
         font-family: 'Poppins', sans-serif;
         vertical-align: middle;
         text-align: center;
-        color: var(--muted);
+        color: var(--dark);
         border: none;
     }
 
@@ -203,7 +200,7 @@
     }
 
     .btn-action-view {
-        color: var(--secondary);
+        color: var(--dark);
         background: none;
         border: none;
         font-size: 1.1rem;
@@ -211,7 +208,7 @@
         transition: all 0.2s;
     }
     .btn-action-view:hover {
-        color: #2980B9;
+        color: #2d2e2e;
         transform: scale(1.1);
     }
 
@@ -221,10 +218,10 @@
         font-size: 1.1rem;
         padding: 5px;
         transition: all 0.2s;
-        color: #F39C12;
+        color: #85c7fc;
     }
     .btn-action-edit:hover {
-        color: #D35400;
+        color: #0154ec;
         transform: scale(1.1);
     }
 
@@ -237,15 +234,20 @@
     .aksi-col { width: 16%; }
 </style>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="earth-card">
-            <div class="earth-card-header">
-                <span><i class="fas fa-clipboard-list me-2"></i>Pengaduan Saya</span>
-                <a href="{{ route('siswa.aspirasi.create') }}" class="btn-earth">
-                    <i class="fas fa-plus me-2"></i>Ajukan Pengaduan
-                </a>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="earth-card">
+                        <div class="earth-card-header">
+                            <span>Pengaduan Saya</span>
+                            <a href="{{ route('siswa.aspirasi.create') }}" class="btn-earth" style="text-decoration: none;">
+                                <i class="fas fa-plus me-2"></i>Ajukan Pengaduan
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            
             <div class="card-body p-4">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -277,7 +279,7 @@
                                     @if ($aspirasi->foto)
                                         <img src="{{ $aspirasi->foto_url }}" alt="Foto Pengaduan" class="foto-pengaduan">
                                     @else
-                                        <span class="text-muted">-</span>
+                                        <span class="text-dark">-</span>
                                     @endif
                                 </td>
                                 <td>{{ $aspirasi->created_at->format('d M Y') }}</td>
@@ -319,8 +321,8 @@
                                         <div class="empty-icon">
                                             <i class="fas fa-inbox"></i>
                                         </div>
-                                        <h5 class="text-muted mb-2" style="color: var(--primary); font-weight: 600;">Belum ada pengaduan</h5>
-                                        <p class="text-muted mb-3" style="color: var(--muted);">Anda belum pernah mengajukan pengaduan</p>
+                                        <h5 class="text-darj mb-2" style="color: var(--primary); font-weight: 600;">Belum ada pengaduan</h5>
+                                        <p class="text-dark mb-3" style="color: var(--dark);">Anda belum pernah mengajukan pengaduan</p>
                                         <div class="mt-3">
                                             <a href="{{ route('siswa.aspirasi.create') }}" class="btn-earth">
                                                 <i class="fas fa-plus me-2"></i>Ajukan Pengaduan Pertama Anda
