@@ -8,7 +8,6 @@ return new class extends Migration
 {
     public function up()
     {
-        // PERHATIAN: Nama tabel di sini adalah 'siswas'
         Schema::table('siswas', function (Blueprint $table) {
             $table->string('email')->unique()->after('nis');
         });
