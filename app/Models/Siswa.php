@@ -15,8 +15,12 @@ class Siswa extends Authenticatable
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['nis', 'kelas', 'name', 'password'];
+    protected $fillable = ['nis', 'kelas', 'name', 'password', 'email'];
+
     protected $hidden = ['password', 'remember_token'];
+
+    protected $casts = [
+    ];
 
     public function aspirasis()
     {

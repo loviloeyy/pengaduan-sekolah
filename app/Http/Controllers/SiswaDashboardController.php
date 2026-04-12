@@ -9,11 +9,18 @@ class SiswaDashboardController extends Controller
     public function index()
     {
         $siswa = auth()->guard('siswa')->user();
-        $total = Aspirasi::where('nis', $siswa->nis)->count();
-        $menunggu = Aspirasi::where('nis', $siswa->nis)->where('status', 'Menunggu')->count();
-        $proses = Aspirasi::where('nis', $siswa->nis)->where('status', 'Proses')->count();
-        $selesai = Aspirasi::where('nis', $siswa->nis)->where('status', 'Selesai')->count();
+        $nis = $siswa->nis;
 
-        return view('siswa.dashboard', compact('total', 'menunggu', 'proses', 'selesai'));
+        $total = Aspirasi::where('nis', $nis)->count();
+        $menunggu = Aspirasi::where('nis', $nis)->where('status', 'Menunggu')->count();
+        $proses = Aspirasi::where('nis', $nis)->where('status', 'Proses')->count();
+        $selesai = Aspirasi::where('nis', $nis)->where('status', 'Selesai')->count();
+
+        $aspirasis = Aspirasi::where('nis', $nis)
+            ->with('kategori')
+            ->latest()
+            ->paginate(10); 
+
+        return view('siswa.dashboard', compact('total', 'menunggu', 'proses', 'selesai', 'aspirasis'));
     }
 }

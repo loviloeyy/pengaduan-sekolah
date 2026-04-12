@@ -3,230 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Pengaduan Sarana Sekolah</title>
+    <title>Login - Pengaduan Sekolah</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Import Font Poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Kita pakai warna asli kamu tapi font diganti Poppins */
-            --primary: #2C3E50;
-            --secondary: #3498DB;
-            --light: #ECF0F1;
+            --navy-dark: #1A252F;
+            --navy-main: #2C3E50;
+            --grey-bg: #ECF0F1;
+            --white: #FFFFFF;
+            --input-icon-color: #95A5A6;
         }
-
         body {
-            background: linear-gradient(135deg, var(--light), #dfe6e9);
-            min-height: 100vh;
+            background-color: var(--grey-bg);
+            font-family: 'Poppins', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* FONT UTAMA DIUBAH KE POPPINS */
-            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            color: var(--navy-main);
+            overflow-x: hidden;
         }
-
         .login-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(44, 62, 80, 0.15);
-            overflow: hidden;
-            max-width: 450px;
-            width: 100%;
-            border: 1px solid rgba(44, 62, 80, 0.05);
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, var(--primary), #34495E);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        /* Pastikan judul juga pakai Poppins */
-        .login-header h1, .login-header h4, .login-header p {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .login-body {
+            background: var(--white);
             padding: 40px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 30px rgba(44, 62, 80, 0.15);
+            text-align: center;
+            position: relative;
         }
 
-        .form-control {
-            border-radius: 10px;
-            padding: 12px 15px;
-            border: 2px solid #e9ecef;
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background: var(--grey-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+            color: var(--navy-main);
+            font-size: 2.5rem;
+            border: 2px solid var(--navy-main);
+        }
+
+        h2 { font-weight: 700; color: var(--navy-dark); margin-bottom: 5px; }
+        .subtitle { color: #7F8C8D; font-size: 0.9rem; margin-bottom: 25px; }
+
+        .input-group {
+            margin-bottom: 15px;
+            background-color: #F8F9FA;
+            border: 1px solid #BDC3C7;
+            border-radius: 8px;
             transition: all 0.3s;
-            /* Input text pakai Poppins */
-            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
         }
-
+        .input-group:focus-within {
+            border-color: var(--navy-main);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+        .input-group-text {
+            background: transparent;
+            border: none;
+            color: var(--navy-dark);
+            padding-left: 15px;
+            padding-right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-control {
+            border: none;
+            background: transparent;
+            padding: 12px 10px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--navy-dark);
+        }
         .form-control:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+            box-shadow: none;
+            background: transparent;
+            outline: none;
+        }
+        .form-control::placeholder {
+            color: #1A252F;
         }
 
         .btn-login {
-            background: linear-gradient(135deg, var(--secondary), #2980B9);
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
-            font-weight: 600;
-            transition: all 0.3s;
+            background-color: var(--navy-main);
             color: white;
-            /* Tombol pakai Poppins */
-            font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-            background: linear-gradient(135deg, #2980B9, var(--secondary));
-        }
-
-        .role-btn {
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-            color: var(--primary);
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
             font-weight: 600;
-            /* Tombol Role pakai Poppins */
             font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            background-color: var(--navy-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 62, 80, 0.3);
+            color: white;
+        }
+
+        .register-link {
+            display: block;
+            margin-top: 20px;
+            color: var(--navy-main);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .register-link:hover { color: var(--navy-dark); text-decoration: underline; }
+
+        /* Copyright Style */
+        .copyright-text {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: #95A5A6;
+            font-weight: 400;
+        }
+
+        .alert {
+            border-radius: 8px;
+            font-size: 0.85rem;
+            text-align: center;
+            border: none;
+            padding: 10px 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            animation: fadeIn 0.5s;
         }
-
-        .role-btn:hover {
-            background: #EBF5FB;
-            border-color: var(--secondary);
-            color: var(--secondary);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .role-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
-            font-family: 'Poppins', sans-serif;
-        }
-        .alert-danger {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            color: #721c24;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .text-muted, .form-label {
-            font-family: 'Poppins', sans-serif;
-        }
+        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #C3E6CB; }
+        .alert-danger { background-color: #F8D7DA; color: #721C24; border: 1px solid #F5C6CB; }
     </style>
 </head>
 <body>
     <div class="login-card">
-        <div class="login-header">
-            <h1><i class="fas fa-school me-2"></i></h1>
-            <h4>Pengaduan Sekolah</h4>
-            <p class="mb-0">Silahkan login untuk melanjutkan</p>
+        <div class="logo-container">
+            <i class="fas fa-school"></i>
         </div>
+        <h2>Login</h2>
+        <p class="subtitle">Silakan login untuk melanjutkan</p>
 
-        <div class="login-body">
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
-
-            @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('login.submit') }}">
-                @csrf
-
-                <!-- PILIHAN ROLE (TETAP ADA) -->
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Pilih Role</label>
-                    <div class="role-container">
-                        <div class="role-btn active" onclick="selectRole('admin', this)">
-                            <i class="fas fa-user-shield me-2"></i>Admin
-                        </div>
-                        <div class="role-btn" onclick="selectRole('siswa', this)">
-                            <i class="fas fa-user-graduate me-2"></i>Siswa
-                        </div>
-                    </div>
-                    <input type="hidden" name="role" id="roleInput" value="admin">
-                </div>
-
-                <!-- INPUT USERNAME/NIS (TETAP ADA) -->
-                <div class="mb-3">
-                    <label for="username" class="form-label fw-bold">
-                        <span id="labelText">Username</span>
-                    </label>
-                    <input type="text" class="form-control @error('username') is-invalid @enderror"
-                           id="username" name="username" value="{{ old('username') }}" required autofocus>
-                    @error('username')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-4">
-                    <label for="password" class="form-label fw-bold">Password</label>
-                    <input type="password" class="form-control @error('password') is-invalid @enderror"
-                           id="password" name="password" required>
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-login w-100">
-                    <i class="fas fa-sign-in-alt me-2"></i>Login Sekarang
-                </button>
-            </form>
-
-            <div class="text-center mt-4">
-                <small class="text-muted">
-                    <i class="fas fa-info-circle me-1"></i>
-                    <span id="infoText">Gunakan username dan password yang telah diberikan</span>
-                </small>
+        @if(session('success'))
+            <div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ session('success') }}</span>
             </div>
+        @endif
+
+        @if($errors->has('email'))
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>{{ $errors->first('email') }}</span>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('login.submit') }}">
+            @csrf
+
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-login">Login</button>
+        </form>
+
+        <a href="{{ route('siswa.register.form') }}" class="register-link">
+            Belum punya akun? <strong>Register Siswa</strong>
+        </a>
+
+        <div class="copyright-text">
+            &copy; 2026 Sistem Pengaduan Sekolah
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function selectRole(role, element) {
-            document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('roleInput').value = role;
-
-            if(role === 'admin') {
-                document.getElementById('labelText').textContent = 'Username';
-                document.getElementById('infoText').textContent = 'Gunakan username dan password yang telah diberikan';
-            } else {
-                document.getElementById('labelText').textContent = 'NIS';
-                document.getElementById('infoText').textContent = 'Gunakan NIS dan password Anda';
-            }
-        }
-    </script>
 </body>
 </html>

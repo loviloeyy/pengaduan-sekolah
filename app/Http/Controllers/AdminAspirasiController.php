@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdminAspirasiController extends Controller
 {
-    // READ - Menampilkan daftar pengaduan
     public function index()
     {
         $aspirasis = Aspirasi::with(['siswa', 'kategori', 'histories'])
@@ -22,7 +21,6 @@ class AdminAspirasiController extends Controller
         return view('admin.aspirasi.index', compact('aspirasis', 'kategoris'));
     }
 
-    // READ - Filter pengaduan
     public function filter(Request $request)
     {
         $query = Aspirasi::with(['siswa', 'kategori']);
@@ -51,7 +49,6 @@ class AdminAspirasiController extends Controller
         return view('admin.aspirasi.index', compact('aspirasis', 'kategoris'));
     }
 
-    // UPDATE - Update status dan feedback pengaduan
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -61,7 +58,6 @@ class AdminAspirasiController extends Controller
 
         $aspirasi = Aspirasi::findOrFail($id);
 
-        // Simpan riwayat perubahan status
         AspirasiHistory::create([
             'id_aspirasi' => $aspirasi->id_aspirasi,
             'status' => $request->status,
@@ -77,7 +73,6 @@ class AdminAspirasiController extends Controller
         return redirect()->route('admin.aspirasi.index')->with('success', 'Status pengaduan berhasil diperbarui.');
     }
 
-    // DELETE - Hapus pengaduan (opsional)
     public function destroy($id)
     {
         $aspirasi = Aspirasi::findOrFail($id);
@@ -86,14 +81,12 @@ class AdminAspirasiController extends Controller
         return redirect()->route('admin.aspirasi.index')->with('success', 'Pengaduan berhasil dihapus.');
     }
 
-    // READ - Riwayat pengaduan
     public function riwayat()
     {
         $aspirasis = Aspirasi::with(['siswa', 'kategori'])->latest()->paginate(15);
         return view('admin.aspirasi.riwayat', compact('aspirasis'));
     }
 
-    // READ - Ringkasan statistik
     public function ringkasan()
     {
         $stats = Aspirasi::select(
@@ -137,7 +130,7 @@ class AdminAspirasiController extends Controller
                     12 => 'Des'
                 ];
 
-                $bulan = (int) $item->bulan; // FIX penting
+                $bulan = (int) $item->bulan; 
 
                 $item->label = ($bulanIndo[$bulan] ?? '-') . ' ' . $item->tahun;
 

@@ -4,7 +4,6 @@
 
 @section('content')
 <style>
-
     :root {
         --primary: #2C3E50;
         --secondary: #3498DB;
@@ -65,7 +64,7 @@
     }
 
     .btn-riwayat:hover {
-        background-color: #2980B9; /* Biru lebih gelap */
+        background-color: #2980B9;
         color: white;
         transform: translateY(-3px) scale(1.05);
         box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
@@ -129,7 +128,7 @@
     }
 
     .table {
-        min-width: 1000px;
+        min-width: 1200px;
         margin-bottom: 0;
     }
 
@@ -161,19 +160,11 @@
 
     .table td.col-keterangan {
         white-space: normal;
-        max-width: 180px;
+        max-width: 200px;
         line-height: 1.4;
-        color: var(--secondary);
-        text-decoration: underline dotted;
-        text-underline-offset: 3px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .table td.col-keterangan:hover {
-        color: var(--primary);
-        text-decoration: underline;
-        font-weight: 600;
+        color: var(--dark);
+        text-decoration: none;
+        cursor: default;
     }
 
     .table td.col-tanggal {
@@ -206,16 +197,9 @@
     }
 
     .badge-kategori {
-        cursor: pointer;
-    }
-    .badge-kategori:hover {
-        background-color: var(--primary);
-        color: white;
-        border-color: var(--primary);
-        transform: scale(1.05);
+        cursor: default;
     }
 
-    /* Badge Status */
     .status-badge {
         padding: 5px 15px;
         border-radius: 20px;
@@ -307,7 +291,6 @@
         box-shadow: 0 4px 10px rgba(198, 40, 40, 0.3);
     }
 
-    /* Timeline Styles */
     .history-timeline {
         position: relative;
         padding: 10px 0;
@@ -383,7 +366,6 @@
         object-fit: cover;
         border-radius: 8px;
         margin: 0 auto;
-        border: 1px solid #E0E0E0;
         display: block;
     }
     .foto-placeholder {
@@ -523,6 +505,7 @@
         transition: all 0.3s;
         background: #faf9f7;
         color: var(--dark);
+        resize: none;
     }
     .form-control-modern:focus {
         outline: none;
@@ -563,12 +546,20 @@
     }
 </style>
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-4 px-0">
+
+    @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3 mb-4" role="alert" style="font-family: 'Poppins', sans-serif; border-left: 5px solid #27AE60;">
+                    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
     <div class="row">
         <div class="col-md-12">
             <div class="earth-card">
                 <div class="earth-card-header">
-                    <span></i>Daftar Pengaduan Sarana Sekolah</span>
+                    <span>Daftar Pengaduan Sekolah</span>
                 </div>
 
                 <div class="card-body-custom">
@@ -577,12 +568,7 @@
                         <form method="GET" action="{{ route('admin.aspirasi.filter') }}" class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label">Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control form-control-sm" value="{{ request('tanggal') }}">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Bulan</label>
-                                <input type="month" name="bulan" class="form-control form-control-sm" value="{{ request('bulan') }}">
-                            </div>
+                                <input type="date" name="tanggal" class="form-control form-control-sm" value="{{ request('tanggal') }}">                            </div>
                             <div class="col-md-3">
                                 <label class="form-label">NIS Siswa</label>
                                 <input type="text" name="nis" class="form-control form-control-sm" placeholder="Cari NIS" value="{{ request('nis') }}">
@@ -617,13 +603,13 @@
                             <table class="table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th width="6%" class="text-center">Foto</th>
                                         <th width="8%">NIS</th>
                                         <th width="13%">Nama Siswa</th>
                                         <th width="8%">Kelas</th>
                                         <th width="13%">Kategori</th>
                                         <th width="13%">Lokasi</th>
                                         <th width="17%">Keterangan</th>
+                                        <th width="6%" class="text-center">Foto</th>
                                         <th width="8%">Status</th>
                                         <th width="8%">Tanggal</th>
                                         <th width="6%" class="text-center">Aksi</th>
@@ -632,6 +618,26 @@
                                 <tbody>
                                     @foreach($aspirasis as $aspirasi)
                                     <tr>
+                                        <td><strong>{{ $aspirasi->nis }}</strong></td>
+
+                                        <td>{{ $aspirasi->siswa->name ?? '-' }}</td>
+
+                                        <td style="font-weight: 500; color: var(--dark);">
+                                            {{ $aspirasi->siswa->kelas ?? '-' }}
+                                        </td>
+
+                                        <td>
+                                            <span class="badge-pill badge-kategori">
+                                                {{ $aspirasi->kategori->ket_kategori }}
+                                            </span>
+                                        </td>
+
+                                        <td>{{ $aspirasi->lokasi }}</td>
+
+                                        <td class="col-keterangan">
+                                            {{ Str::limit($aspirasi->ket, 40) }}
+                                        </td>
+
                                         <td class="text-center">
                                             @if($aspirasi->foto)
                                                 <img src="{{ $aspirasi->foto_url }}" alt="Foto" class="foto-pengaduan">
@@ -639,29 +645,7 @@
                                                 <div class="foto-placeholder"><i class="fas fa-image"></i></div>
                                             @endif
                                         </td>
-                                        <td><strong>{{ $aspirasi->nis }}</strong></td>
-                                        <td>{{ $aspirasi->siswa->name ?? '-' }}</td>
 
-                                        <!-- KOLOM KELAS: Teks Biasa -->
-                                        <td style="font-weight: 500; color: var(--dark);">
-                                            {{ $aspirasi->siswa->kelas ?? '-' }}
-                                        </td>
-
-                                        <td>
-                                            <span class="badge-pill badge-kategori" style="cursor: default;">
-                                                {{ $aspirasi->kategori->ket_kategori }}
-                                            </span>
-                                        </td>
-
-                                        <td>{{ $aspirasi->lokasi }}</td>
-
-                                        <!-- KOLOM KETERANGAN: BISA DIKLIK -->
-                                        <td class="col-keterangan"
-                                            onclick="showSimpleModal('Detail Keterangan', '{{ str_replace("'", "\\'", $aspirasi->ket) }}')">
-                                            {{ Str::limit($aspirasi->ket, 25) }}
-                                        </td>
-
-                                        <!-- Status -->
                                         <td>
                                             <span class="status-badge
                                                 @if($aspirasi->status == 'Menunggu') status-menunggu
@@ -671,13 +655,11 @@
                                             </span>
                                         </td>
 
-                                        <!-- Tanggal -->
                                         <td class="col-tanggal">
                                             {{ $aspirasi->created_at->format('d M') }}<br>
                                             {{ $aspirasi->created_at->format('Y') }}
                                         </td>
 
-                                        <!-- Modern Action Buttons -->
                                         <td class="action-cell">
                                             <button class="btn-action-modern" title="Edit Status"
                                                     onclick="openEditModal({{ $aspirasi->id_aspirasi }}, '{{ $aspirasi->status }}', '{{ addslashes($aspirasi->feedback ?? '') }}')">
@@ -719,7 +701,6 @@
     </div>
 </div>
 
-<!-- MODAL EDIT STATUS -->
 <div id="editModalBackdrop" class="modal-custom-blur" onclick="closeEditModal(event)">
     <div class="modal-content-custom">
         <div class="modal-header-custom">
@@ -753,19 +734,6 @@
     </div>
 </div>
 
-<!-- MODAL DETAIL -->
-<div id="detailModalSimple" class="modal-custom-simple" onclick="closeSimpleModal(event)">
-    <div class="modal-content-custom">
-        <div class="modal-header-custom">
-            <h4 class="modal-title-custom" id="modalTitleSimple">Detail</h4>
-            <button class="close-btn" onclick="closeSimpleModalDirect()">&times;</button>
-        </div>
-        <div class="modal-body-custom" id="modalBodySimple">
-        </div>
-    </div>
-</div>
-
-<!-- MODAL RIWAYAT STATUS -->
 <div id="historyModalBackdrop" class="modal-custom-blur" onclick="closeHistoryModal(event)">
     <div class="modal-content-custom">
         <div class="modal-header-custom">
@@ -777,7 +745,6 @@
     </div>
 </div>
 
-<!-- Data riwayat + detail aspirasi JS -->>
 <script type="application/json" id="historiesData">
 @php
     $dataMap = [];
@@ -814,7 +781,6 @@
 <script>
     const historiesData = JSON.parse(document.getElementById('historiesData').textContent);
 
-    // --- Fungsi untuk Modal Edit (Dengan Blur) ---
     function openEditModal(id, currentStatus, currentFeedback) {
         document.getElementById('editForm').action = '/admin/aspirasi/' + id;
         document.getElementById('modalStatus').value = currentStatus;
@@ -832,7 +798,6 @@
         document.body.style.overflow = 'auto';
     }
 
-    // --- Fungsi untuk Modal Riwayat ---
     function openHistoryModal(id) {
         const data = historiesData[id];
         if (!data) return;
@@ -864,7 +829,6 @@
         }
         html += '</div>';
 
-        // Timeline Riwayat
         html += '<hr style="border-color:rgba(44,62,80,0.1);margin:15px 0;">';
         html += '<h6 style="font-weight:700;color:var(--dark);margin-bottom:12px;"><i class="fas fa-clock-rotate-left me-1"></i>Riwayat Perubahan</h6>';
 
@@ -902,24 +866,9 @@
         document.body.style.overflow = 'auto';
     }
 
-    function showSimpleModal(title, content) {
-        document.getElementById('modalTitleSimple').innerText = title;
-        document.getElementById('modalBodySimple').innerText = content;
-        document.getElementById('detailModalSimple').style.display = 'block';
-    }
-
-    function closeSimpleModal(event) {
-        if (event.target.id === 'detailModalSimple') closeSimpleModalDirect();
-    }
-
-    function closeSimpleModalDirect() {
-        document.getElementById('detailModalSimple').style.display = 'none';
-    }
-
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeEditModalDirect();
-            closeSimpleModalDirect();
             closeHistoryModalDirect();
         }
     });

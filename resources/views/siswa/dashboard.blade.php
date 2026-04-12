@@ -4,8 +4,6 @@
 
 @section('content')
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
     :root {
         --primary: #2C3E50;
         --secondary: #3498DB;
@@ -14,369 +12,455 @@
         --dark: #2C3E50;
         --muted: #7F8C8D;
 
+        /* Variabel Gradient Tetap Ada (Tidak Diubah) */
         --card-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
         --stat-gradient-1: linear-gradient(135deg, #2C3E50, #34495E);
         --stat-gradient-2: linear-gradient(135deg, #3498DB, #2980B9);
         --stat-gradient-3: linear-gradient(135deg, #7F8C8D, #7F8C8D);
         --stat-gradient-4: linear-gradient(135deg, #16A085, #16A085);
 
-        --card-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
-        --btn-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        --header-gradient: linear-gradient(135deg, #2C3E50, #34495E);
+        --welcome-bg: #ffffff;
+        --welcome-text: #2C3E50;
     }
 
-    body {
-        background-color: var(--light);
-        font-family: 'Poppins', sans-serif;
+    body { background-color: var(--light); font-family: 'Poppins', sans-serif; }
+
+    .welcome-banner {
+        background-color: var(--welcome-bg);
+        border-radius: 12px;
+        padding: 20px 25px;
+        margin-bottom: 25px;
+        border-left: 5px solid var(--dark);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .welcome-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--welcome-text);
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .welcome-subtitle {
+        font-size: 0.9rem;
         color: var(--dark);
         font-weight: 400;
     }
 
-    .modern-card {
+    .earth-card {
         background: var(--card-gradient);
         border: none;
-        border-radius: 16px;
-        box-shadow: var(--card-shadow);
-        transition: all 0.3s ease;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
         overflow: hidden;
         border: 1px solid rgba(44, 62, 80, 0.05);
+        margin-bottom: 24px;
     }
 
-    .modern-card:hover {
+    .earth-card-header {
+        background: var(--header-gradient);
+        color: white;
+        padding: 20px 24px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.1rem;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .btn-earth {
+        background: var(--light);
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: #2C3E50;
+        font-size: 0.85rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+    .btn-earth:hover { background: #4f6780; transform: translateY(-2px); color: white; text-decoration: none; }
+
+    .stat-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        background: #ffffff;
+        border-radius: 12px;
+        min-height: 100px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.03);
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+        text-align: left;
+    }
+
+    .stat-card:hover {
         transform: translateY(-3px);
-        box-shadow: 0 6px 25px rgba(44, 62, 80, 0.12);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    .stat-card-1 { background: var(--stat-gradient-1); color: white; }
-    .stat-card-2 { background: var(--stat-gradient-2); color: white; }
-    .stat-card-3 { background: var(--stat-gradient-3); color: white; }
-    .stat-card-4 { background: var(--stat-gradient-4); color: white; }
+    .stat-card-1 .stat-icon { color: #2C3E50; }
+    .stat-card-2 .stat-icon { color: #2C3E50; }
+    .stat-card-3 .stat-icon { color: #2C3E50; }
+    .stat-card-4 .stat-icon { color: #2C3E50; }
 
     .stat-icon {
-        font-size: 2.2rem;
-        opacity: 0.9;
-        margin-bottom: 12px;
-        color: white !important;
+        font-size: 2rem;
+        opacity: 1;
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.03);
+        border-radius: 10px;
     }
 
-    .info-section {
-        background: var(--card-gradient);
-        border: none;
-        border-radius: 16px;
-        padding: 0;
-        overflow: hidden;
-        border: 1px solid rgba(44, 62, 80, 0.05);
+    .stat-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
-    .info-section .card-header {
-        background: var(--stat-gradient-1);
-        color: white;
-        border-radius: 16px 16px 0 0 !important;
-        padding: 18px 24px;
-        font-weight: 600;
-    }
-
-    .tip-card, .recent-card {
-        background: var(--card-gradient);
-        border-radius: 16px;
-        border: none;
-        overflow: hidden;
-        border: 1px solid rgba(44, 62, 80, 0.05);
-    }
-
-    .tip-card .card-header, .recent-card .card-header {
-        background: #2C3E50;
-        color: var(--light);
-        border-bottom: 1px solid #E9ECEF;
-        font-weight: 700;
-    }
-
-    .status-badge {
-        padding: 6px 16px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 0.75rem;
-        display: inline-block;
-        border: 1px solid transparent;
-        font-family: 'Poppins', sans-serif;
-        text-transform: capitalize;
-        letter-spacing: 0.5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    .status-menunggu { background-color: #FFF3CD; color: #856404; border-color: #FFE69C; }
-    .status-proses { background-color: #B3E5FC; color: #0277BD; border-color: #81D4FA; }
-    .status-selesai { background-color: #C8E6C9; color: #2E7D32; border-color: #A5D6A7; }
-
-    .user-info {
-        background: #f6f7f8;
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 12px;
-        transition: all 0.3s ease;
-        border: 1px solid #E9ECEF;
-    }
-
-    .user-info:hover {
-        background: white;
-        transform: scale(1.01);
-        box-shadow: 0 4px 12px rgba(44, 62, 80, 0.08);
-        border-color: var(--secondary);
-    }
-
-    .table-responsive {
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid rgba(44, 62, 80, 0.05);
-    }
-
-    .table thead {
-        background: #F8F9FA;
-        color: var(--muted);
-        border-bottom: 2px solid #E9ECEF;
-    }
-
-    .table th {
-        font-weight: 700;
-        padding: 12px 10px;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-family: 'Poppins', sans-serif;
-        border: none;
-    }
-
-    .table td {
-        padding: 12px 10px;
-        border-top: 1px solid #F0F0F0;
-        font-size: 0.85rem;
-        font-family: 'Poppins', sans-serif;
-        color: var(--dark);
-    }
-
-    .table-hover tbody tr:hover {
-        background: #F4F6F7;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 30px 20px;
-    }
-
-    .empty-icon {
-        font-size: 3.5rem;
-        color: var(--accent);
-        margin-bottom: 15px;
-    }
-
-    .section-title {
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 20px;
-        font-family: 'Poppins', sans-serif;
-        letter-spacing: 0.5px;
-    }
-
-    .stat-number {
+    .stat-value {
         font-size: 2rem;
         font-weight: 700;
-        line-height: 1.2;
-        font-family: 'Poppins', sans-serif;
+        color: #2C3E50;
+        line-height: 1;
+        margin-bottom: 4px;
     }
 
     .stat-label {
         font-size: 0.85rem;
-        opacity: 0.9;
-        margin-bottom: 8px;
-        font-family: 'Poppins', sans-serif;
+        color: #7F8C8D;
         font-weight: 500;
+        text-transform: capitalize;
+        white-space: nowrap;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 600;
-    }
-
-    p, small, ul, li {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 400;
-    }
-
-    .alert {
-        font-family: 'Poppins', sans-serif;
-        border: none;
-        border-left: 4px solid var(--secondary);
-        background: #EBF5FB;
-        color: var(--dark);
-    }
-
-    .alert-heading {
-        color: var(--primary);
+    .table-responsive { border-radius: 12px; overflow-x: auto; }
+    .table { width: 100%; border-collapse: collapse; }
+    .table thead { background: #F8F9FA; border-bottom: 2px solid #E9ECEF; }
+     .table th {
         font-weight: 700;
-    }
-
-    .alert-light {
-        background: #EBF5FB;
+        padding: 16px 12px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         color: var(--dark);
+        border: none;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
     }
 
+    .table td {
+        padding: 16px 12px;
+        border-top: 1px solid #F0F0F0;
+        font-size: 0.9rem;
+        color: var(--dark);
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .col-kategori {
+        min-width: 140px;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .col-lokasi {
+        text-align: start !important;
+        min-width: 120px;
+    }
+    .col-keterangan {
+        text-align: start !important;
+        max-width: 250px; overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .col-foto {
+        min-width: 100px;
+    }
+    .col-status {
+        min-width: 100px;
+     }
+    .col-tanggal {
+        font-weight: 500;
+        color: var(--muted);
+        min-width: 110px;
+    }
+    .col-aksi {
+        min-width: 80px;
+    }
+
+    .kategori-badge {
+        padding: 6px 14px; border-radius: 50px; font-weight: 600; font-size: 0.75rem;
+        background-color: #EBF5FB; color: var(--primary); border: 1px solid #D6EAF8;
+        display: inline-block;
+    }
+
+    .status-badge {
+        padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 0.75rem;
+        display: inline-block;
+    }
+    .status-menunggu { background-color: #FFF3CD; color: #856404; }
+    .status-proses { background-color: #B3E5FC; color: #0277BD; }
+    .status-selesai { background-color: #C8E6C9; color: #2E7D32; }
+
+    .foto-pengaduan {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .btn-action {
+        width: 32px; height: 32px; border-radius: 8px; display: inline-flex;
+        align-items: center; justify-content: center; background: #f8f9fa;
+        color: var(--dark); border: 1px solid #ddd; text-decoration: none;
+        transition: all 0.2s;
+    }
+    .btn-action:hover { background: var(--dark); color: white; transform: translateY(-2px); }
+
+    .empty-state { text-align: center; padding: 40px 20px; }
+    .empty-icon { font-size: 3.5rem; color: var(--accent); margin-bottom: 15px; }
+
+    .pagination .page-link {
+        color: var(--secondary); border: 1px solid rgba(52, 152, 219, 0.2);
+        border-radius: 6px; padding: 8px 12px; margin: 0 4px; text-decoration: none;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: var(--secondary); border-color: var(--secondary); color: white;
+    }
+
+    /* Mobile Responsive */
     @media (max-width: 768px) {
-        .stat-card { margin-bottom: 16px; }
-        .table th, .table td { padding: 10px 8px; font-size: 0.8rem; }
-        .stat-number { font-size: 1.5rem; }
-        .user-info { margin-bottom: 10px; }
-    }
+        .stat-row {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
 
-    @media (max-width: 576px) {
-        .stat-card { margin-bottom: 12px; }
-        .stat-number { font-size: 1.3rem; }
-        .section-title { font-size: 1.2rem; }
+        .stat-card {
+            padding: 15px;
+            min-height: 90px;
+            gap: 12px;
+        }
+
+        .stat-icon {
+            font-size: 1.6rem;
+            width: 40px;
+            height: 40px;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+        }
+
+        .earth-card-header { padding: 15px 20px; font-size: 1rem; }
+        .btn-earth { padding: 6px 12px; font-size: 0.75rem; }
+
+        .table thead { display: none; }
+        .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
+        .table tr {
+            margin-bottom: 15px; background: white; border-radius: 12px;
+            border: 1px solid #eee; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .table td {
+            padding: 10px 0; border: none; text-align: left !important;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px dashed #f0f0f0; gap: 10px;
+        }
+        .table td:last-child { border-bottom: none; }
+
+        .mobile-label {
+            font-size: 0.7rem; color: var(--muted); font-weight: 700;
+            text-transform: uppercase; min-width: 80px;
+        }
+
+        .td-foto-mobile {
+            justify-content: space-between !important; align-items: center !important;
+            margin: 10px 0 !important; border-bottom: 1px solid #eee !important;
+            padding-bottom: 10px !important;
+        }
+        .td-foto-mobile .mobile-label { display: block !important; min-width: 60px; }
+        .foto-pengaduan { width: 60px; height: 60px; margin: 0; }
+
+        .td-aksi-mobile { justify-content: flex-end !important; margin-top: 10px; padding-top: 10px; }
+        .btn-action { width: 36px; height: 36px; }
+        .desktop-only { display: none; }
     }
 </style>
 
-<div class="row">
-    <div class="col-12 mb-4"></div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-        <div class="modern-card stat-card-1 text-center p-3">
-            <i class="fas fa-clipboard-list stat-icon"></i>
-            <div class="stat-label">Total Pengaduan</div>
-            <div class="stat-number">{{ $total }}</div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-        <div class="modern-card stat-card-2 text-center p-3">
-            <i class="fas fa-clock stat-icon"></i>
-            <div class="stat-label">Menunggu</div>
-            <div class="stat-number">{{ $menunggu }}</div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-        <div class="modern-card stat-card-3 text-center p-3">
-            <i class="fas fa-cog stat-icon"></i>
-            <div class="stat-label">Diproses</div>
-            <div class="stat-number">{{ $proses }}</div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-        <div class="modern-card stat-card-4 text-center p-3">
-            <i class="fas fa-check-circle stat-icon"></i>
-            <div class="stat-label">Selesai</div>
-            <div class="stat-number">{{ $selesai }}</div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12 mb-4"></div>
-
-    <div class="col-md-12">
-        <div class="modern-card info-section">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i>Informasi Profil Siswa</h5>
-            </div>
-            <div class="card-body p-4">
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="user-info">
-                            <small class="text-dark fw-bold">NIS</small>
-                            <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->nis }}</h6>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="user-info">
-                            <small class="text-dark fw-bold">Nama Lengkap</small>
-                            <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->name }}</h6>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="user-info">
-                            <small class="text-dark fw-bold">Kelas</small>
-                            <h6 class="mb-0 mt-1" style="color: var(--primary);">{{ auth()->guard('siswa')->user()->kelas }}</h6>
-                        </div>
-                    </div>
+<div class="container-fluid">
+ @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3 mb-4" role="alert" style="font-family: 'Poppins', sans-serif; border-left: 5px solid #27AE60;">
+                    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+            @endif
 
-<div class="row mt-4">
-    <div class="col-md-6 mb-4">
-        <div class="modern-card tip-card">
-            <div class="card-header p-3">
-                <h6 class="mb-0"><i class="fas fa-lightbulb me-2" style="color: var(--light);"></i>Panduan Penggunaan</h6>
-            </div>
-            <div class="card-body p-4">
-                <div class="alert alert-light border-0 mb-0">
-                   <h6 class="alert-heading mb-3">
-                    <i class="fas fa-info-circle me-2"></i>Petunjuk untuk Siswa:
-                </h6>
-                <ul class="mb-0" style="line-height: 1.7; padding-left: 20px;">
-                    <li>Ajukan pengaduan melalui menu <strong>"Pengaduan Saya"</strong>, lalu klik tombol <strong>"Ajukan Pengaduan"</strong>.</li>
-                    <li>Klik <strong>ikon mata</strong> pada kolom aksi di menu <strong>"Pengaduan Saya"</strong> untuk melihat detail pengaduan dan status secara real-time.</li>
-                    <li>Jika ingin memperbarui pengaduan, klik <strong>ikon pensil</strong> pada kolom aksi di menu <strong>"Pengaduan Saya"</strong>.</li>
-                    <li>Klik <strong>ikon sampah</strong> pada kolom aksi di menu <strong>"Pengaduan Saya"</strong> untuk menghapus pengaduan.</li>
-                </ul>
-                </div>
-            </div>
+    <div class="welcome-banner">
+        <div class="welcome-title">
+            Selamat Datang, {{ auth()->guard('siswa')->user()->name }}! 👋
+        </div>
+        <div class="welcome-subtitle">
+            Silakan isi formulir pengaduan sekolah di bawah ini
         </div>
     </div>
 
-    <div class="col-md-6 mb-4">
-        <div class="modern-card recent-card">
-            <div class="card-header p-3">
-                <h6 class="mb-0"><i class="fas fa-history me-2" style="color: var(--light);"></i>Pengaduan Terbaru</h6>
+    <div class="stat-row">
+        <div class="stat-card stat-card-1">
+            <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+            <div class="stat-content">
+                <div class="stat-value">{{ $total }}</div>
+                <div class="stat-label">Total Pengaduan</div>
             </div>
-            <div class="card-body p-4">
-                @php
-                    $latest = \App\Models\Aspirasi::where('nis', auth()->guard('siswa')->user()->nis)
-                        ->with('kategori')
-                        ->latest()
-                        ->take(5)
-                        ->get();
-                @endphp
+        </div>
 
-                @if($latest->count() > 0)
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Kategori</th>
-                                    <th>Tanggal</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($latest as $item)
-                                <tr>
-                                    <td style="font-weight: 600;">{{ $item->id_aspirasi }}</td>
-                                    <td>{{ $item->kategori->ket_kategori ?? 'Tidak diketahui' }}</td>
-                                    <td>{{ $item->created_at->format('d M Y') }}</td>
-                                    <td>
-                                        <span class="status-badge
-                                            @if($item->status == 'Menunggu') status-menunggu
-                                            @elseif($item->status == 'Proses') status-proses
-                                            @else status-selesai @endif">
-                                            {{ $item->status }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @else
-                    <div class="empty-state">
-                        <i class="fas fa-inbox empty-icon"></i>
-                        <h5 class="text-muted mb-2" style="color: var(--primary); font-weight: 600;">Belum Ada Pengaduan</h5>
-                        <p class="text-muted mb-3" style="color: var(--dark);">Anda belum pernah mengajukan pengaduan sarana sekolah</p>
-                    </div>
-                @endif
+        <div class="stat-card stat-card-2">
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            <div class="stat-content">
+                <div class="stat-value">{{ $menunggu }}</div>
+                <div class="stat-label">Menunggu</div>
             </div>
+        </div>
+
+        <div class="stat-card stat-card-3">
+            <div class="stat-icon"><i class="fas fa-cog"></i></div>
+            <div class="stat-content">
+                <div class="stat-value">{{ $proses }}</div>
+                <div class="stat-label">Diproses</div>
+            </div>
+        </div>
+
+        <div class="stat-card stat-card-4">
+            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-content">
+                <div class="stat-value">{{ $selesai }}</div>
+                <div class="stat-label">Selesai</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="earth-card">
+        <div class="earth-card-header">
+            <span><i class="fas fa-list me-2"></i>Pengaduan Saya</span>
+            <a href="{{ route('siswa.aspirasi.create') }}" class="btn-earth">
+                <i class="fas fa-plus me-2"></i>Ajukan Pengaduan
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="col-kategori">Kategori</th>
+                            <th class="col-lokasi">Lokasi</th>
+                            <th class="col-keterangan">Keterangan</th>
+                            <th class="col-foto">Foto</th>
+                            <th class="col-status">Status</th>
+                            <th class="col-tanggal">Tanggal</th>
+                            <th class="col-aksi">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($aspirasis as $aspirasi)
+                        <tr>
+                            <td class="col-kategori">
+                                <span class="mobile-label d-md-none">Kategori</span>
+                                <span class="kategori-badge">{{ $aspirasi->kategori->ket_kategori ?? '-' }}</span>
+                            </td>
+                            <td class="col-lokasi">
+                                <span class="mobile-label d-md-none">Lokasi</span>
+                                {{ $aspirasi->lokasi }}
+                            </td>
+                            <td class="col-keterangan">
+                                <span class="mobile-label d-md-none">Keterangan</span>
+                                <span title="{{ $aspirasi->ket }}">{{ Str::limit($aspirasi->ket, 30) }}</span>
+                            </td>
+                            <td class="col-foto td-foto-mobile">
+                                <span class="mobile-label d-md-none">Foto</span>
+                                @if ($aspirasi->foto)
+                                    <img src="{{ $aspirasi->foto_url }}" alt="Foto" class="foto-pengaduan">
+                                @else
+                                    <span class="text-muted d-block" style="font-size: 1.2rem;">-</span>
+                                @endif
+                            </td>
+                            <td class="col-status">
+                                <span class="mobile-label d-md-none">Status</span>
+                                <span class="status-badge
+                                    @if ($aspirasi->status == 'Menunggu') status-menunggu
+                                    @elseif($aspirasi->status == 'Proses') status-proses
+                                    @else status-selesai @endif">
+                                    {{ $aspirasi->status }}
+                                </span>
+                            </td>
+                            <td class="col-tanggal">
+                                <span class="mobile-label d-md-none">Tanggal</span>
+                                <span class="desktop-only">{{ $aspirasi->created_at->format('d M Y') }}</span>
+                                <span class="d-md-none small">{{ $aspirasi->created_at->format('d/m/y') }}</span>
+                            </td>
+                            <td class="col-aksi td-aksi-mobile">
+                                <span class="mobile-label d-md-none">Aksi</span>
+                                <a href="{{ route('siswa.aspirasi.show', $aspirasi->id_aspirasi) }}" class="btn-action" title="Lihat Detail">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <div class="empty-state">
+                                    <div class="empty-icon"><i class="fas fa-inbox"></i></div>
+                                    <h5 class="text-dark mb-2" style="color: var(--primary); font-weight: 600;">Belum ada pengaduan</h5>
+                                    <p class="text-muted mb-3">Mulai dengan mengajukan pengaduan pertama Anda.</p>
+                                    <a href="{{ route('siswa.aspirasi.create') }}" class="btn-earth">
+                                        <i class="fas fa-plus me-2"></i>Ajukan Sekarang
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if ($aspirasis->hasPages())
+            <div class="p-3 d-flex justify-content-center">
+                {{ $aspirasis->links() }}
+            </div>
+            @endif
         </div>
     </div>
 </div>

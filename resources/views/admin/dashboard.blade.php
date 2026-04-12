@@ -43,6 +43,7 @@
         transition: all 0.3s ease;
     }
 
+
     .earth-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 6px 25px rgba(44, 62, 80, 0.12);
@@ -81,33 +82,61 @@
         box-shadow: 0 6px 25px rgba(44, 62, 80, 0.12);
     }
 
-    .stat-card-1 { background: var(--stat-gradient-1); color: white; }
-    .stat-card-2 { background: var(--stat-gradient-2); color: white; }
-    .stat-card-3 { background: var(--stat-gradient-3); color: white; }
-    .stat-card-4 { background: var(--stat-gradient-4); color: white; }
+    .stat-card-1, .stat-card-2, .stat-card-3, .stat-card-4 {
+        background: #ffffff;
+        color: var(--dark);
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
 
-   .stat-icon {
-    font-size: 1.8rem;
-    color: white !important;
-    opacity: 1;
-    margin-bottom: 10px;
+    .stat-card-1 .stat-icon { color: #2C3E50; }
+    .stat-card-2 .stat-icon { color: #2C3E50; }
+    .stat-card-3 .stat-icon { color: #2C3E50; }
+    .stat-card-4 .stat-icon { color: #2C3E50; }
+
+    .stat-icon {
+        font-size: 2.2rem;
+        color: #2C3E50 !important;
+        opacity: 1;
+        margin-bottom: 0;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.03);
+        border-radius: 12px;
+        flex-shrink: 0;
+    }
+
+    .stat-content-wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
     }
 
     .stat-number {
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        line-height: 1.2;
+        line-height: 1.1;
         font-family: 'Poppins', sans-serif;
-        margin-top: 5px;
+        margin-top: 0;
+        margin-bottom: 5px;
+        color: #2C3E50;
     }
 
     .stat-label {
-        font-size: 0.85rem;
-        opacity: 0.9;
+        font-size: 0.9rem;
+        opacity: 1;
         margin-bottom: 0;
         font-family: 'Poppins', sans-serif;
         font-weight: 500;
         text-transform: capitalize;
+        color: #2C3E50;
     }
 
     .table-responsive {
@@ -118,7 +147,7 @@
     }
 
     .table {
-        min-width: 900px;
+        min-width: 1200px;
         margin-bottom: 0;
     }
 
@@ -152,17 +181,11 @@
 
     .table td.col-keterangan {
         white-space: normal;
-        max-width: 180px;
+        max-width: 200px;
         line-height: 1.4;
-        cursor: pointer;
-        color: var(--secondary);
-        text-decoration: underline dotted;
-        text-underline-offset: 3px;
-    }
-
-    .table td.col-keterangan:hover {
-        color: var(--primary);
-        text-decoration: underline;
+        color: var(--dark);
+        text-decoration: none;
+        cursor: default;
     }
 
     .table td.col-tanggal {
@@ -269,113 +292,65 @@
         font-family: 'Poppins', sans-serif;
     }
 
-    .modal-custom-simple {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(44, 62, 80, 0.5);
-        animation: fadeIn 0.3s;
-    }
-    .modal-content-custom {
-        background-color: white;
-        margin: 10% auto;
-        padding: 0;
-        border-radius: 20px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
-    }
-    .modal-header-custom {
-        background: var(--stat-gradient-1);
-        color: white;
-        padding: 20px 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .modal-title-custom {
-        color: white;
-        font-weight: 700;
-        font-size: 1.3rem;
-        margin: 0;
-        font-family: 'Poppins', sans-serif;
-    }
-    .close-btn {
-        background: rgba(255,255,255,0.2);
-        border: none;
-        color: white;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 0.3s;
-        font-size: 1.2rem;
-        line-height: 1;
-    }
-    .close-btn:hover {
-        background: rgba(255,255,255,0.4);
-        transform: rotate(90deg);
-    }
-    .modal-body-custom {
-        padding: 25px;
-        color: var(--dark);
-        font-size: 1rem;
-        line-height: 1.6;
-        max-height: 60vh;
-        overflow-y: auto;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-    @keyframes slideUp { from {transform: translateY(50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
-
     @media (max-width: 768px) {
-        .modal-content-custom { margin: 10% auto; width: 95%; }
         .stat-number { font-size: 1.8rem; }
         .earth-card-header { font-size: 1rem; padding: 16px 20px; }
+
+        .stat-card-1, .stat-card-2, .stat-card-3, .stat-card-4 {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+            padding: 15px;
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.8rem;
+            margin: 0 auto;
+        }
+        .stat-content-wrap {
+            text-align: center;
+        }
     }
 </style>
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-4 px-0">
 
-    <!-- Statistik Cards -->
     <div class="row g-4 mb-4">
         <div class="col-md-3 col-sm-6">
-            <div class="modern-card stat-card-1 text-center p-3">
+            <div class="modern-card stat-card-1">
                 <i class="fas fa-clipboard-list stat-icon"></i>
-                <div class="stat-label">Total Pengaduan</div>
-                <div class="stat-number">{{ $total }}</div>
+                <div class="stat-content-wrap">
+                    <div class="stat-label">Total Pengaduan</div>
+                    <div class="stat-number">{{ $total }}</div>
+                </div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="modern-card stat-card-2 text-center p-3">
+            <div class="modern-card stat-card-2">
                 <i class="fas fa-clock stat-icon"></i>
-                <div class="stat-label">Menunggu</div>
-                <div class="stat-number">{{ $menunggu }}</div>
+                <div class="stat-content-wrap">
+                    <div class="stat-label">Menunggu</div>
+                    <div class="stat-number">{{ $menunggu }}</div>
+                </div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="modern-card stat-card-3 text-center p-3">
+            <div class="modern-card stat-card-3">
                 <i class="fas fa-cog stat-icon"></i>
-                <div class="stat-label">Diproses</div>
-                <div class="stat-number">{{ $proses }}</div>
+                <div class="stat-content-wrap">
+                    <div class="stat-label">Diproses</div>
+                    <div class="stat-number">{{ $proses }}</div>
+                </div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="modern-card stat-card-4 text-center p-3">
+            <div class="modern-card stat-card-4">
                 <i class="fas fa-check-circle stat-icon"></i>
-                <div class="stat-label">Selesai</div>
-                <div class="stat-number">{{ $selesai }}</div>
+                <div class="stat-content-wrap">
+                    <div class="stat-label">Selesai</div>
+                    <div class="stat-number">{{ $selesai }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -390,67 +365,70 @@
                     @if($pengaduanTerbaru->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
-                            <thead>
-                            <tr>
-                                <th width="6%" class="text-center">Foto</th>
-                                <th width="7%">NIS</th>
-                                <th width="10%">Nama Siswa</th>
-                                <th width="6%">Kelas</th>
-                                <th width="10%">Kategori</th>
-                                <th width="12%">Lokasi</th>
-                                <th width="14%">Keterangan</th>
-                                <th width="8%">Status</th>
-                                <th width="8%">Tanggal</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($pengaduanTerbaru as $aspirasi)
-                                <tr>
-                                    <td class="text-center">
-                                        @if($aspirasi->foto)
-                                            <img src="{{ $aspirasi->foto_url }}" alt="Foto" class="foto-pengaduan">
-                                        @else
-                                            <div class="foto-placeholder"><i class="fas fa-image"></i></div>
-                                        @endif
-                                    </td>
-                                    <td><strong>{{ $aspirasi->nis }}</strong></td>
-                                    <td>{{ $aspirasi->siswa->name ?? '-' }}</td>
+                                <thead>
+                                    <tr>
+                                        <th width="8%">NIS</th>
+                                        <th width="13%">Nama Siswa</th>
+                                        <th width="8%">Kelas</th>
+                                        <th width="13%">Kategori</th>
+                                        <th width="13%">Lokasi</th>
+                                        <th width="17%">Keterangan</th>
+                                        <th width="6%" class="text-center">Foto</th>
+                                        <th width="8%">Status</th>
+                                        <th width="8%">Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pengaduanTerbaru as $aspirasi)
+                                    <tr>
+                                        <td><strong>{{ $aspirasi->nis }}</strong></td>
 
-                                    <td>
-                                        <span style="font-size: 0.9rem; font-weight: 500; color: var(--dark);">
-                                            {{ $aspirasi->siswa->kelas ?? '-' }}
-                                        </span>
-                                    </td>
+                                        <td>{{ $aspirasi->siswa->name ?? '-' }}</td>
 
-                                    <td><span class="badge-pill badge-kategori">{{ $aspirasi->kategori->ket_kategori }}</span></td>
+                                        <td>
+                                            <span style="font-size: 0.9rem; font-weight: 500; color: var(--dark);">
+                                                {{ $aspirasi->siswa->kelas ?? '-' }}
+                                            </span>
+                                        </td>
 
-                                    <td style="font-size: 0.9rem; color: var(--dark);">
-                                        {{ $aspirasi->lokasi }}
-                                    </td>
+                                        <td><span class="badge-pill badge-kategori">{{ $aspirasi->kategori->ket_kategori }}</span></td>
 
-                                    <td class="col-keterangan" onclick="showModal('Detail Keterangan', '{{ str_replace("'", "\\'", $aspirasi->ket) }}')">
-                                        {{ Str::limit($aspirasi->ket, 25) }}
-                                    </td>
-                                    <td>
-                                        <span class="status-badge
-                                            @if($aspirasi->status == 'Menunggu') status-menunggu
-                                            @elseif($aspirasi->status == 'Proses') status-proses
-                                            @else status-selesai @endif">
-                                            {{ $aspirasi->status }}
-                                        </span>
-                                    </td>
-                                    <td class="col-tanggal">
-                                        {{ $aspirasi->created_at->format('d M') }}<br>
-                                        {{ $aspirasi->created_at->format('Y') }}
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
+                                        <td style="font-size: 0.9rem; color: var(--dark);">
+                                            {{ $aspirasi->lokasi }}
+                                        </td>
 
+                                        <td class="col-keterangan">
+                                            {{ Str::limit($aspirasi->ket, 40) }}
+                                        </td>
+
+                                        <td class="text-center">
+                                            @if($aspirasi->foto)
+                                                <img src="{{ $aspirasi->foto_url }}" alt="Foto" class="foto-pengaduan">
+                                            @else
+                                                <div class="foto-placeholder"><i class="fas fa-image"></i></div>
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge
+                                                @if($aspirasi->status == 'Menunggu') status-menunggu
+                                                @elseif($aspirasi->status == 'Proses') status-proses
+                                                @else status-selesai @endif">
+                                                {{ $aspirasi->status }}
+                                            </span>
+                                        </td>
+
+                                        <td class="col-tanggal">
+                                            {{ $aspirasi->created_at->format('d M') }}<br>
+                                            {{ $aspirasi->created_at->format('Y') }}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                         <div class="text-center mt-3">
-                            <a href="{{ route('admin.aspirasi.index') }}" class="btn btn-sm" style="background: var(--secondary); color: white; border-radius: 8px; padding: 8px 20px; font-weight: 600; font-family: 'Poppins', sans-serif;">
+                            <a href="{{ route('admin.aspirasi.index') }}" class="btn btn-sm" style="background: var(--dark); color: white; border-radius: 8px; padding: 8px 20px; font-weight: 600; font-family: 'Poppins', sans-serif;">
                                 Lihat Semua Pengaduan <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
@@ -496,7 +474,7 @@
                             <div class="panduan-icon"><i class="fas fa-user-graduate"></i></div>
                             <div class="panduan-content">
                                 <h6>Daftar Siswa</h6>
-                                <p>Fitur daftar siswa digunakan untuk memasukkan data siswa baru seperti nama, NIS, dan kelas.</p>
+                                <p>Fitur daftar siswa digunakan untuk memasukkan data siswa baru seperti nama, NIS, kelas, email dan password</p>
                             </div>
                         </li>
                     </ul>
@@ -506,38 +484,4 @@
     </div>
 </div>
 
-<!-- MODAL DETAIL -->
-<div id="detailModalSimple" class="modal-custom-simple" onclick="closeModal(event)">
-    <div class="modal-content-custom">
-        <div class="modal-header-custom">
-            <h4 class="modal-title-custom" id="modalTitleSimple">Detail</h4>
-            <button class="close-btn" onclick="closeModalDirect()">&times;</button>
-        </div>
-        <div class="modal-body-custom" id="modalBodySimple">
-            <!-- Konten diisi JS -->
-        </div>
-    </div>
-</div>
-
-<script>
-    function showModal(title, content) {
-        document.getElementById('modalTitleSimple').innerText = title;
-        document.getElementById('modalBodySimple').innerText = content;
-        document.getElementById('detailModalSimple').style.display = 'block';
-    }
-
-    function closeModal(event) {
-        if (event.target.id === 'detailModalSimple') closeModalDirect();
-    }
-
-    function closeModalDirect() {
-        document.getElementById('detailModalSimple').style.display = 'none';
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            closeModalDirect();
-        }
-    });
-</script>
 @endsection

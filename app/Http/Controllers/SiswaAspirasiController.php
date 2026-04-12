@@ -12,13 +12,9 @@ class SiswaAspirasiController extends Controller
 {
     public function index()
     {
-        $siswa = Auth::guard('siswa')->user();
-        $aspirasis = Aspirasi::where('nis', $siswa->nis)
-            ->with('kategori')
-            ->latest()
-            ->paginate(10);
-        return view('siswa.aspirasi.index', compact('aspirasis'));
+        return redirect()->route('siswa.dashboard');
     }
+
 
     public function create()
     {
@@ -26,24 +22,27 @@ class SiswaAspirasiController extends Controller
         return view('siswa.aspirasi.create', compact('kategoris'));
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
-            'id_kategori' => 'required|integer',
-            'lokasi' => 'required|string|max:50',
-            'ket' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'id_kategori' => 'required|integer|exists:kategoris,id_kategori',
+            'lokasi'      => 'required|string|max:100',
+            'ket'         => 'required|string',
+            'foto'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $siswa = auth()->guard('siswa')->user();
 
         $aspirasi = new Aspirasi();
         $aspirasi->id_aspirasi = Aspirasi::max('id_aspirasi') + 1;
-        $aspirasi->nis = auth()->guard('siswa')->user()->nis;
+        $aspirasi->nis         = $siswa->nis;
         $aspirasi->id_kategori = $request->id_kategori;
-        $aspirasi->lokasi = $request->lokasi;
-        $aspirasi->ket = $request->ket;
-        $aspirasi->status = 'Menunggu';
+        $aspirasi->lokasi      = $request->lokasi;
+        $aspirasi->ket         = $request->ket;
+        $aspirasi->status      = 'Menunggu';
+        $aspirasi->feedback    = null;
 
-        // Handle file upload
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $filename = 'pengaduan_' . time() . '_' . $aspirasi->id_aspirasi . '.' . $file->getClientOriginalExtension();
@@ -53,73 +52,13 @@ class SiswaAspirasiController extends Controller
 
         $aspirasi->save();
 
-        return redirect()->route('siswa.aspirasi.index')->with('success', 'Pengaduan berhasil diajukan!');
-    }
-
-    public function riwayat()
-    {
-        $siswa = Auth::guard('siswa')->user();
-        $aspirasis = Aspirasi::where('nis', $siswa->nis)
-            ->with('kategori')
-            ->latest()
-            ->paginate(15);
-        return view('siswa.aspirasi.riwayat', compact('aspirasis'));
-    }
-
-    public function ringkasan()
-    {
-        $siswa = Auth::guard('siswa')->user();
-        $aspirasis = Aspirasi::where('nis', $siswa->nis)
-            ->with('kategori')
-            ->latest()
-            ->get();
-
-        return view('siswa.aspirasi.ringkasan', compact('aspirasis'));
-    }
-
-    public function edit(Aspirasi $aspirasi)
-    {
-        $kategoris = Kategori::all();
-        return view('siswa.aspirasi.edit', compact('kategoris', 'aspirasi'));
-    }
-
-    public function update(Request $request, Aspirasi $aspirasi)
-    {
-        $request->validate([
-            'id_kategori' => 'required|integer',
-            'lokasi' => 'required|string|max:50',
-            'ket' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $aspirasi->id_kategori = $request->id_kategori;
-        $aspirasi->lokasi = $request->lokasi;
-        $aspirasi->ket = $request->ket;
-
-        // Handle upload foto baru
-        if ($request->hasFile('foto')) {
-
-            // Hapus foto lama jika ada
-            if ($aspirasi->foto && Storage::exists('public/pengaduan/' . $aspirasi->foto)) {
-                Storage::delete('public/pengaduan/' . $aspirasi->foto);
-            }
-
-            $file = $request->file('foto');
-            $filename = 'pengaduan_' . time() . '_' . $aspirasi->id_aspirasi . '.' . $file->getClientOriginalExtension();
-            Storage::putFileAs('public/pengaduan', $file, $filename);
-
-            $aspirasi->foto = $filename;
-        }
-
-        $aspirasi->save();
-
-        return redirect()->route('siswa.aspirasi.index')
-            ->with('success', 'Pengaduan berhasil diperbarui!');
+        return redirect()->route('siswa.dashboard')->with('success', 'Pengaduan berhasil diajukan!');
     }
 
     public function show($id)
     {
         $siswa = Auth::guard('siswa')->user();
+
         $aspirasi = Aspirasi::where('id_aspirasi', $id)
             ->where('nis', $siswa->nis)
             ->with(['kategori', 'histories'])
@@ -128,21 +67,45 @@ class SiswaAspirasiController extends Controller
         return view('siswa.aspirasi.show', compact('aspirasi'));
     }
 
-    // Method baru untuk menghapus pengaduan
-    public function destroy($id)
+    /*
+    public function edit(Aspirasi $aspirasi)
     {
-        // Pastikan pengaduan milik siswa yang sedang login
-        $aspirasi = Aspirasi::where('id_aspirasi', $id)
-            ->where('nis', auth()->guard('siswa')->user()->nis)
-            ->firstOrFail();
-
-        // Hapus file foto jika ada
-        if ($aspirasi->foto) {
-            Storage::delete('public/pengaduan/' . $aspirasi->foto);
+        // Cek kepemilikan
+        if ($aspirasi->nis !== auth()->guard('siswa')->user()->nis) {
+            abort(403);
         }
 
-        $aspirasi->delete();
+        // Opsional: Hanya boleh edit jika status masih 'Menunggu'
+        if ($aspirasi->status != 'Menunggu') {
+            return redirect()->route('siswa.dashboard')->with('error', 'Tidak dapat mengedit pengaduan yang sudah diproses.');
+        }
 
-        return redirect()->route('siswa.aspirasi.index')->with('success', 'Pengaduan berhasil dihapus.');
+        $kategoris = Kategori::all();
+        return view('siswa.aspirasi.edit', compact('kategoris', 'aspirasi'));
+    }
+
+    public function update(Request $request, Aspirasi $aspirasi)
+    {
+        // Validasi & Logika update sama seperti sebelumnya...
+        // ...
+        // return redirect()->route('siswa.dashboard')->with('success', 'Pengaduan diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        // Logika hapus...
+        // return redirect()->route('siswa.dashboard')->with('success', 'Pengaduan dihapus.');
+    }
+    */
+
+    // Method lama (riwayat/ringkasan) juga bisa dihapus atau di-redirect ke dashboard jika tidak dipakai
+    public function riwayat()
+    {
+        return redirect()->route('siswa.dashboard');
+    }
+
+    public function ringkasan()
+    {
+        return redirect()->route('siswa.dashboard');
     }
 }

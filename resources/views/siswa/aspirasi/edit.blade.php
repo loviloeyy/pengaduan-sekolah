@@ -4,26 +4,16 @@
 
 @section('content')
 <style>
-    /* ========================================
-       PALET WARNA: BLUE & SLATE GREY
-       ======================================== */
     :root {
-        /* Warna Utama (Navy Blue) */
         --primary: #2C3E50;
-        /* Warna Sekunder (Biru Langit) */
         --secondary: #3498DB;
-        /* Warna Aksen (Abu-abu Slate) */
         --accent: #95A5A6;
-        /* Background Halaman (Abu sangat dingin) */
         --light: #ECF0F1;
-        /* Teks Utama (Hampir Hitam/Biru Gelap) */
         --dark: #2C3E50;
-        /* Warna Status */
         --success: #27AE60;
         --warning: #F39C12;
         --danger: #E74C3C;
 
-        /* Gradient Biru/Abu */
         --card-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
         --header-gradient: linear-gradient(135deg, #2C3E50, #34495E);
         --btn-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
@@ -49,13 +39,16 @@
         gap: 12px;
     }
 
+    /* PERUBAHAN: Padding input diperkecil agar lebih ringkas */
     .form-control {
         border: 1px solid rgba(44, 62, 80, 0.2);
         border-radius: 8px;
-        padding: 12px 15px;
+        padding: 10px 12px; /* Diperkecil dari 12px 15px */
         font-family: 'Poppins', sans-serif;
         transition: all 0.3s ease;
         background-color: #fff;
+        resize: none;
+        font-size: 0.95rem;
     }
 
     .form-control:focus {
@@ -68,15 +61,17 @@
         color: var(--dark);
         margin-bottom: 8px;
         font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
     }
 
     .form-select {
         border: 1px solid rgba(44, 62, 80, 0.2);
         border-radius: 8px;
-        padding: 12px 15px;
+        padding: 10px 12px; /* Diperkecil dari 12px 15px */
         font-family: 'Poppins', sans-serif;
         transition: all 0.3s ease;
         background-color: #fff;
+        font-size: 0.95rem;
     }
 
     .form-select:focus {
@@ -84,24 +79,23 @@
         box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
     }
 
+    /* PERUBAHAN: Ukuran tombol diperkecil sedikit */
     .btn-earth {
-        background: var(--secondary); /* Biru */
+        background: var(--secondary);
         border: none;
         border-radius: 8px;
-        padding: 12px 24px;
+        padding: 10px 20px; /* Diperkecil dari 12px 24px */
         font-weight: 600;
         transition: all 0.3s ease;
-        box-shadow: var(--btn-shadow);
         color: white;
-        font-size: 1rem;
+        font-size: 0.95rem; /* Diperkecil dari 1rem */
         font-family: 'Poppins', sans-serif;
         letter-spacing: 0.5px;
     }
 
     .btn-earth:hover {
-        background: #2980B9; /* Biru lebih gelap */
+        background: #2980B9;
         transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
         color: white;
     }
 
@@ -109,11 +103,11 @@
         background: transparent;
         border: 2px solid var(--primary);
         border-radius: 8px;
-        padding: 12px 24px;
+        padding: 10px 20px; /* Diperkecil dari 12px 24px */
         font-weight: 600;
         transition: all 0.3s ease;
         color: var(--primary);
-        font-size: 1rem;
+        font-size: 0.95rem; /* Diperkecil dari 1rem */
         font-family: 'Poppins', sans-serif;
         letter-spacing: 0.5px;
     }
@@ -129,6 +123,7 @@
         border-radius: 12px;
         font-family: 'Poppins', sans-serif;
         border: none;
+        font-size: 0.9rem;
     }
 
     .alert-success {
@@ -147,13 +142,13 @@
         color: var(--danger);
         font-weight: 500;
         font-family: 'Poppins', sans-serif;
+        font-size: 0.85rem;
     }
 
     .is-invalid {
         border-color: var(--danger) !important;
     }
 
-    /* Upload area styling (Jika ingin dipakai lagi di masa depan) */
     .upload-area {
         border: 2px dashed rgba(44, 62, 80, 0.3);
         border-radius: 12px;
@@ -213,10 +208,11 @@
 </style>
 
 <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <!-- PERUBAHAN: Lebar form diubah dari col-md-8 menjadi col-md-6 -->
+    <div class="col-md-6 offset-md-3">
         <div class="earth-card">
             <div class="earth-card-header">
-                <h4>Edit Pengaduan Sarana Sekolah</h4>
+                <h5>Edit Pengaduan Sekolah</h5>
             </div>
             <div class="card-body p-4">
                 @if (session('success'))
@@ -241,7 +237,8 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-4">
+                    <!-- PERUBAHAN: Margin bawah diperkecil dari mb-4 menjadi mb-3 -->
+                    <div class="mb-3">
                         <label class="form-label">Kategori Pengaduan</label>
                         <select name="id_kategori" class="form-select @error('id_kategori') is-invalid @enderror"
                             required>
@@ -258,8 +255,8 @@
                         @enderror
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label">Lokasi Pengaduan</label>
+                    <div class="mb-3">
+                        <label class="form-label">Lokasi</label>
                         <input type="text" name="lokasi" class="form-control @error('lokasi') is-invalid @enderror"
                             value="{{ old('lokasi', $aspirasi->lokasi) }}" required>
                         @error('lokasi')
@@ -267,9 +264,10 @@
                         @enderror
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label">Keterangan Pengaduan</label>
-                        <textarea name="ket" class="form-control @error('ket') is-invalid @enderror" rows="5" required>{{ old('ket', $aspirasi->ket) }}</textarea>
+                    <div class="mb-3">
+                        <label class="form-label">Keterangan</label>
+                        <!-- PERUBAHAN: Rows diperkecil dari 5 menjadi 4 -->
+                        <textarea name="ket" class="form-control @error('ket') is-invalid @enderror" rows="4" required>{{ old('ket', $aspirasi->ket) }}</textarea>
                         @error('ket')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -279,13 +277,14 @@
                     @if ($aspirasi->foto)
                         <div class="mb-3">
                             <label class="form-label">Foto Saat Ini</label><br>
-                            <img src="{{ asset('storage/pengaduan/' . $aspirasi->foto) }}" width="150"
+                            <!-- PERUBAHAN: Lebar foto diperkecil dari 150 menjadi 120 -->
+                            <img src="{{ asset('storage/pengaduan/' . $aspirasi->foto) }}" width="120"
                                 class="rounded" style="border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                         </div>
                     @endif
 
                     <!-- Upload Foto -->
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="form-label">Ganti Foto (Opsional)</label>
                         <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror">
                         @error('foto')
@@ -293,7 +292,7 @@
                         @enderror
                     </div>
 
-                    <div class="d-grid gap-3">
+                    <div class="d-grid gap-3 mt-4">
                         <button type="submit" class="btn-earth">
                             <i class="fas fa-save me-2"></i>Update Pengaduan
                         </button>
@@ -310,8 +309,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Kode JS ini tetap ada untuk jaga-jaga jika Anda mengubah input file menjadi drag-drop area nanti
-        // Saat ini input file standar browser tetap berfungsi tanpa perlu JS khusus.
         const uploadArea = document.getElementById('uploadArea');
         const fotoInput = document.getElementById('fotoInput');
         const previewImage = document.getElementById('previewImage');

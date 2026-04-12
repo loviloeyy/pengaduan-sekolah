@@ -18,7 +18,6 @@
         background: #ffffff;
         border: none;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
         overflow: hidden;
         border: 1px solid rgba(44, 62, 80, 0.05);
         margin-bottom: 20px;
@@ -152,12 +151,11 @@
         align-items: flex-start;
     }
 
-    .foto-pengaduan {
+        .foto-pengaduan {
         max-width: 100%;
         width: auto;
-        max-height: 300px;
+        max-height: 150px;
         border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         display: block;
     }
 
@@ -271,7 +269,7 @@
 </style>
 
 <div class="row">
-    <div class="col-lg-10 offset-lg-1">
+    <div class="col-lg-8 offset-lg-2">
         <div class="detail-card">
             <div class="card-header-unified">
                 <h4><i class="fas fa-file-alt"></i> Detail Pengaduan</h4>
@@ -335,7 +333,6 @@
                     </div>
                 </div>
 
-                <!-- Deskripsi -->
                 <div class="mb-4 mt-4">
                     <h6 class="fw-bold mb-2" style="color: var(--primary);">
                         Keterangan
@@ -359,7 +356,6 @@
                 </div>
                 @endif
 
-                <!-- Timeline Riwayat -->
                 <div>
                     <div class="section-title"><i class="fas fa-history"></i> Riwayat Perubahan</div>
 
@@ -401,7 +397,7 @@
                     </div>
 
                     <div class="bottom-action-area">
-                        <a href="{{ route('siswa.aspirasi.index') }}" class="btn-back">
+                        <a href="{{ route('siswa.dashboard') }}" class="btn-back">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                     </div>
@@ -413,3 +409,4 @@
     </div>
 </div>
 @endsection
+
