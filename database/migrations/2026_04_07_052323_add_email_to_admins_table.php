@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::table('admins', function (Blueprint $table) {
             // Menambahkan kolom email unik setelah kolom username
-            $table->string('email')->unique()->after('username');
+            $table->string('email')->nullable()->unique()->after('username');
         });
     }
 
