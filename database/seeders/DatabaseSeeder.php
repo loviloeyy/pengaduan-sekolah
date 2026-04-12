@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // Admin default
         Admin::create([
             'username' => 'admin',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('admin123'),
         ]);
 
@@ -35,11 +36,11 @@ class DatabaseSeeder extends Seeder
 
         // Siswa contoh (NIS SEBAGAI STRING)
         $siswas = [
-            ['nis' => '1234567890', 'kelas' => 'X IPA 1', 'name' => 'Budi Santoso', 'password' => Hash::make('siswa123')],
-            ['nis' => '1234567891', 'kelas' => 'X IPA 2', 'name' => 'Ani Lestari', 'password' => Hash::make('siswa123')],
-            ['nis' => '1234567892', 'kelas' => 'XI IPS 1', 'name' => 'Rina Wijaya', 'password' => Hash::make('siswa123')],
-            ['nis' => '1234567893', 'kelas' => 'XI IPA 1', 'name' => 'Ahmad Fauzi', 'password' => Hash::make('siswa123')],
-            ['nis' => '1234567894', 'kelas' => 'XII IPS 2', 'name' => 'Siti Nurhaliza', 'password' => Hash::make('siswa123')],
+            ['nis' => '1234567890', 'email' => '1234567890@musaba.com', 'kelas' => 'X IPA 1', 'name' => 'Budi Santoso', 'password' => Hash::make('siswa123')],
+            ['nis' => '1234567891', 'email' => '1234567891@musaba.com', 'kelas' => 'X IPA 2', 'name' => 'Ani Lestari', 'password' => Hash::make('siswa123')],
+            ['nis' => '1234567892', 'email' => '1234567892@musaba.com', 'kelas' => 'XI IPS 1', 'name' => 'Rina Wijaya', 'password' => Hash::make('siswa123')],
+            ['nis' => '1234567893', 'email' => '1234567893@musaba.com', 'kelas' => 'XI IPA 1', 'name' => 'Ahmad Fauzi', 'password' => Hash::make('siswa123')],
+            ['nis' => '1234567894', 'email' => '1234567894@musaba.com', 'kelas' => 'XII IPS 2', 'name' => 'Siti Nurhaliza', 'password' => Hash::make('siswa123')],
         ];
 
         foreach ($siswas as $siswa) {
