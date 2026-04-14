@@ -15,85 +15,34 @@ class SiswaController extends Controller
         return view("admin.siswa.index", compact("Siswas"));
     }
 
-    public function create()
-    {
-        return view("admin.siswa.create");
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nis'     => 'required|string|max:20|unique:siswas,nis',
-            'name'    => 'required|string|max:255',
-            'kelas'   => 'required|string|max:10',
-            'email'   => 'required|string|email|max:255|unique:siswas,email',
-            'password'=> 'required|string|min:6',
-        ]);
-
-        Siswa::create([
-            'nis'      => $request->nis,
-            'name'     => $request->name,
-            'kelas'    => $request->kelas,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return redirect()->route('admin.siswa.index')
-            ->with('success', 'Data siswa berhasil ditambahkan!');
-    }
-
     public function show(Siswa $siswa)
     {
         return view("admin.siswa.show", compact("siswa"));
     }
 
-    public function edit(Siswa $siswa)
-    {
-        return view("admin.siswa.edit", compact("siswa"));
-    }
+    /**
+     * METHOD DI BAWAH INI DIHAPUS/TIDAK DIGUNAKAN OLEH ADMIN:
+     * - create()
+     * - store()
+     * - edit()
+     * - update()
+     * - destroy()
 
-    public function update(Request $request, Siswa $siswa)
-    {
-        $request->validate([
-            'nis'     => 'required|string|max:20|unique:siswas,nis,' . $siswa->nis . ',nis',
-            'name'    => 'required|string|max:255',
-            'kelas'   => 'required|string|max:10',
-            'email'   => 'required|string|email|max:255|unique:siswas,email,' . $siswa->nis . ',nis',
-            'password'=> 'nullable|string|min:6',
-        ]);
-
-        $data = [
-            'nis'     => $request->nis,
-            'name'    => $request->name,
-            'kelas'   => $request->kelas,
-            'email'   => $request->email,
-        ];
-
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
-        }
-
-        $siswa->update($data);
-
-        return redirect()->route('admin.siswa.index')
-            ->with('success', 'Data siswa berhasil diperbarui!');
-    }
-
-    public function destroy(Siswa $siswa)
-    {
-        $siswa->delete();
-        return redirect()->route('admin.siswa.index')
-            ->with('success', 'Data siswa berhasil dihapus!');
-    }
-
+    /**
+     * Menampilkan form register untuk siswa baru
+     */
     public function showRegisterForm()
     {
+        // Jika sudah login sebagai siswa, redirect ke dashboard
         if (Auth::guard('siswa')->check()) {
             return redirect()->route('siswa.dashboard');
         }
         return view('auth.register-siswa');
     }
 
+    /**
+     * Memproses pendaftaran siswa baru
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -113,6 +62,6 @@ class SiswaController extends Controller
         ]);
 
         return redirect()->route('login')
-            ->with('success', 'Register berhasil, silakan login.');
+            ->with('success', 'Registrasi berhasil! Silakan login dengan akun Anda.');
     }
 }

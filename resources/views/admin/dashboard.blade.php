@@ -474,7 +474,7 @@
                             <div class="panduan-icon"><i class="fas fa-user-graduate"></i></div>
                             <div class="panduan-content">
                                 <h6>Daftar Siswa</h6>
-                                <p>Fitur daftar siswa digunakan untuk memasukkan data siswa baru seperti nama, NIS, kelas, email dan password</p>
+                                <p>Fitur daftar siswa digunakan untuk melihat data siswa yang meliputi nama, NIS, kelas, dan email</p>
                             </div>
                         </li>
                     </ul>

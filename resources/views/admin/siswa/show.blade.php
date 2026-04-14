@@ -29,17 +29,9 @@
                             <th>Kelas</th>
                             <td>: {{ $siswa->kelas }}</td>
                         </tr>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <table class="table table-borderless">
                         <tr>
                             <th width="150">Dibuat</th>
                             <td>: {{ \Carbon\Carbon::parse($siswa->created_at)->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</td>
-                        </tr>
-                        <tr>
-                            <th>Diupdate</th>
-                            <td>: {{ \Carbon\Carbon::parse($siswa->updated_at)->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</td>
                         </tr>
                     </table>
                 </div>
@@ -48,11 +40,8 @@
             <hr class="my-4">
 
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.siswa.edit', $siswa->nis) }}" class="btn btn-primary">
-                    <i class="fas fa-pen-to-square me-1"></i> Edit
-                </a>
                 <a href="{{ route('admin.siswa.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left me-1"></i> Kembali
+                    <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar
                 </a>
             </div>
         </div>

@@ -36,28 +36,6 @@
         flex-wrap: wrap;
     }
 
-    .btn-earth {
-        background-color: var(--light);
-        color: #2C3E50;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 12px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        font-size: 0.75rem;
-        display: inline-flex;
-        align-items: center;
-        white-space: nowrap;
-    }
-
-    .btn-earth:hover {
-        background-color: #2C3E50;
-        color: white;
-        transform: translateY(-2px);
-        text-decoration: none;
-    }
-
     .table-responsive {
         border-radius: 12px;
         overflow-x: auto;
@@ -96,19 +74,37 @@
     .table-hover tbody tr:hover { background: #F4F6F7; }
 
     .btn-action {
-        background: none; border: none; font-size: 1.1rem; padding: 6px;
-        border-radius: 6px; transition: all 0.2s ease; cursor: pointer;
-        text-decoration: none; display: inline-flex; margin: 0 2px;
-        width: 32px; height: 32px; align-items: center; justify-content: center;
+        background: none;
+        border: none;
+        font-size: 1.1rem;
+        padding: 6px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        margin: 0 2px;
+        width: 32px;
+        height: 32px;
+        align-items: center;
+        justify-content: center;
     }
-    .btn-action:hover { transform: scale(1.1); background-color: rgba(0,0,0,0.05); }
-    .btn-edit { color: var(--secondary); }
-    .btn-edit:hover { color: #2980B9; background-color: #EBF5FB; }
-    .btn-view { color: #363936; }
-    .btn-view:hover { color: #000000; background-color: #E8F8F5; }
-    .btn-delete { color: #E74C3C; }
-    .btn-delete:hover { color: #C0392B; background-color: #FDedec; }
 
+    .btn-action:hover {
+        transform: scale(1.1);
+    }
+
+    .btn-view {
+        color: #363936;
+        background-color: #f1f3f5;
+        border: 1px solid #dee2e6;
+    }
+
+    .btn-view:hover {
+        color: #000000;
+        background-color: #c6c7c7;
+        border-color: #3c3d3c;
+    }
     .empty-state { text-align: center; padding: 40px 20px; }
     .empty-icon { font-size: 3.5rem; color: var(--accent); margin-bottom: 15px; }
 
@@ -116,16 +112,11 @@
         .earth-card-header {
             padding: 12px 15px;
             font-size: 0.95rem;
+            justify-content: center;
         }
 
-        .table thead {
-            display: none;
-        }
-
-        .table, .table tbody, .table tr, .table td {
-            display: block;
-            width: 100%;
-        }
+        .table thead { display: none; }
+        .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
 
         .table tr {
             margin-bottom: 15px;
@@ -195,101 +186,82 @@
 
 <div class="container-fluid py-4 px-0">
     @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3 mb-4" role="alert" style="font-family: 'Poppins', sans-serif; border-left: 5px solid #27AE60;">
-                    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
+        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3 mb-4" role="alert" style="font-family: 'Poppins', sans-serif; border-left: 5px solid #27AE60;">
+            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="earth-card">
-            <div class="earth-card-header">
-                <span>Daftar Siswa</span>
-                <a href="{{ route('admin.siswa.create') }}" class="btn-earth">
-                    <i class="fas fa-plus me-1"></i>Tambah Siswa
-                </a>
-            </div>
-
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead>
-                            <tr>
-                                <th style="width: 30%;">NAMA & NIS</th>
-                                <th style="width: 30%; text-align: left;">EMAIL</th>
-                                <th style="width: 15%; text-align: center;">KELAS</th>
-                                <th style="width: 25%; text-align: center;">AKSI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($Siswas as $siswa)
-                            <tr>
-                                <td class="td-name-cell">
-                                    <span class="mobile-label d-md-none">Nama & NIS</span>
-                                    <div class="data-content">{{ $siswa->name }}</div>
-                                    <div class="nis-mobile d-md-none">{{ $siswa->nis }}</div>
-                                    <div class="d-none d-md-block nis-mobile" style="margin-top:4px; font-size: 0.85rem; color: var(--dark);">{{ $siswa->nis }}</div>
-                                </td>
-
-                                <td style="text-align: left;">
-                                    <span class="mobile-label d-md-none">Email</span>
-                                    <span class="badge bg-light text-dark border data-content" style="font-size: 0.85rem; padding: 6px 12px; display: inline-flex; align-items: center;">
-                                        <i class="fas fa-envelope me-2 text-secondary" style="font-size: 0.8rem;"></i> {{ $siswa->email }}
-                                    </span>
-                                </td>
-
-                                <td style="text-align: center;">
-                                    <span class="mobile-label d-md-none text-start">Kelas</span>
-                                        {{ $siswa->kelas }}
-                                    </span>
-                                </td>
-
-                                <td style="text-align: center;">
-                                    <span class="mobile-label d-md-none w-100">Aksi</span>
-                                    <div style="display: inline-flex; gap: 5px;">
-
-                                        <a href="{{ route('admin.siswa.show', $siswa->nis) }}" class="btn-action btn-view" title="Detail">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-
-                                        <a href="{{ route('admin.siswa.edit', $siswa->nis) }}" class="btn-action btn-edit" title="Edit">
-                                            <i class="fas fa-pen-to-square"></i>
-                                        </a>
-
-                                        <form method="POST" action="{{ route('admin.siswa.destroy', $siswa->nis) }}" class="d-inline" onsubmit="return confirm('Hapus siswa ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-action btn-delete" title="Hapus">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="text-center py-5">
-                                    <div class="empty-state">
-                                        <div class="empty-icon"><i class="fas fa-inbox"></i></div>
-                                        <h5 class="text-muted mb-2" style="font-weight: 600; color: var(--primary);">Belum ada data siswa</h5>
-                                        <p class="text-muted mb-3">Daftar siswa masih kosong.</p>
-                                        <a href="{{ route('admin.siswa.create') }}" class="btn-earth">
-                                            <i class="fas fa-plus me-2"></i>Tambah Siswa Pertama
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="earth-card">
+                <div class="earth-card-header">
+                    <span>Daftar Siswa</span>
                 </div>
 
-                @if ($Siswas->hasPages())
-                <div class="p-3 d-flex justify-content-center">
-                    {{ $Siswas->links() }}
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%;">NAMA & NIS</th>
+                                    <th style="width: 30%; text-align: left;">EMAIL</th>
+                                    <th style="width: 20%; text-align: center;">KELAS</th>
+                                    <th style="width: 20%; text-align: center;">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($Siswas as $siswa)
+                                <tr>
+                                    <td class="td-name-cell">
+                                        <span class="mobile-label d-md-none">Nama & NIS</span>
+                                        <div class="data-content">{{ $siswa->name }}</div>
+                                        <div class="nis-mobile d-md-none">{{ $siswa->nis }}</div>
+                                        <div class="d-none d-md-block nis-mobile" style="margin-top:4px; font-size: 0.85rem; color: var(--dark);">{{ $siswa->nis }}</div>
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        <span class="mobile-label d-md-none">Email</span>
+                                        <span class="badge bg-light text-dark border data-content" style="font-size: 0.85rem; padding: 6px 12px; display: inline-flex; align-items: center;">
+                                            <i class="fas fa-envelope me-2 text-secondary" style="font-size: 0.8rem;"></i> {{ $siswa->email }}
+                                        </span>
+                                    </td>
+
+                                    <td style="text-align: center;">
+                                        <span class="mobile-label d-md-none text-start">Kelas</span>
+                                        <span class="data-content">{{ $siswa->kelas }}</span>
+                                    </td>
+
+                                    <td style="text-align: center;">
+                                        <span class="mobile-label d-md-none w-100">Aksi</span>
+                                        <div style="display: inline-flex; gap: 5px; justify-content: center;">
+                                            <a href="{{ route('admin.siswa.show', $siswa->nis) }}" class="btn-action btn-view" title="Lihat Detail">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center py-5">
+                                        <div class="empty-state">
+                                            <div class="empty-icon"><i class="fas fa-inbox"></i></div>
+                                            <h5 class="text-muted mb-2" style="font-weight: 600; color: var(--primary);">Belum ada data siswa</h5>
+                                            <p class="text-muted mb-3">Daftar siswa masih kosong.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if ($Siswas->hasPages())
+                    <div class="p-3 d-flex justify-content-center">
+                        {{ $Siswas->links() }}
+                    </div>
+                    @endif
                 </div>
-                @endif
             </div>
         </div>
     </div>
